@@ -41,6 +41,33 @@ export const products = [
     price: 14.99,
     image: "https://images.unsplash.com/photo-1576871337622-98d48d1cf531?w=800&auto=format&fit=crop",
     category: "Accessories"
+  },
+  {
+    id: 7,
+    name: "Premium Running Shoes",
+    price: 129.99,
+    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop",
+    category: "Footwear"
+  },
+  {
+    id: 8,
+    name: "Yoga Mat",
+    price: 34.99,
+    image: "https://images.unsplash.com/photo-1601925260368-ae2f83cf8b7f?w=800&auto=format&fit=crop",
+    category: "Fitness"
+  },
+  {
+    id: 9,
+    name: "Resistance Bands Set",
+    price: 29.99,
+    image: "https://images.unsplash.com/photo-1598575285675-d1ed3a76d1d8?w=800&auto=format&fit=crop",
+    category: "Fitness"
+  },
+  {
+    id: 10,
+    name: "Basketball Jersey",
+    price: 49.99,
+    image: "https://images.unsplash.com/photo-1519861531473-9200262188bf?w=800&auto=format&fit=crop",
+    category: "Basketball"
   }
 ];
-
