@@ -1,4 +1,3 @@
-
 export const products = [
   {
     id: 1,
@@ -69,5 +68,40 @@ export const products = [
     price: 49.99,
     image: "https://images.unsplash.com/photo-1519861531473-9200262188bf?w=800&auto=format&fit=crop",
     category: "Basketball"
+  },
+  {
+    id: 11,
+    name: "Raquette de Tennis Pro",
+    price: 159.99,
+    image: "https://images.unsplash.com/photo-1622279457989-5c5dca71b827?w=800&auto=format&fit=crop",
+    category: "Tennis"
+  },
+  {
+    id: 12,
+    name: "Élastiques de Fitness",
+    price: 24.99,
+    image: "https://images.unsplash.com/photo-1598632640487-6ea4a4e8b963?w=800&auto=format&fit=crop",
+    category: "Fitness"
+  },
+  {
+    id: 13,
+    name: "Set de Badminton",
+    price: 49.99,
+    image: "https://images.unsplash.com/photo-1626224583764-f87db24ac1f4?w=800&auto=format&fit=crop",
+    category: "Badminton"
+  },
+  {
+    id: 14,
+    name: "Ballon de Rugby",
+    price: 34.99,
+    image: "https://images.unsplash.com/photo-1544552866-d3ed42536cfd?w=800&auto=format&fit=crop",
+    category: "Rugby"
+  },
+  {
+    id: 15,
+    name: "Corde à Sauter Pro",
+    price: 19.99,
+    image: "https://images.unsplash.com/photo-1601422407692-ec4eeec1d9b3?w=800&auto=format&fit=crop",
+    category: "Fitness"
   }
 ];
