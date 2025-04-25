@@ -4,6 +4,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { ShoppingCart, Star, Heart } from "lucide-react";
 import { useCart } from '@/stores/CartStore';
+import { useFavorites } from '@/stores/FavoritesStore';
 import { useToast } from "@/components/ui/use-toast";
 import {
   Tooltip,
@@ -24,13 +25,22 @@ interface ProductCardProps {
 const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, category, featured }) => {
   const addToCart = useCart(state => state.addItem);
   const { toast } = useToast();
-  const [isLiked, setIsLiked] = React.useState(false);
+  const { toggleFavorite, isFavorite } = useFavorites();
+  const isLiked = isFavorite(id);
 
   const handleAddToCart = () => {
     addToCart({ id, name, price, image, quantity: 1 });
     toast({
       title: "Ajouté au panier",
       description: `${name} a été ajouté à votre panier`,
+    });
+  };
+
+  const handleToggleFavorite = () => {
+    toggleFavorite(id);
+    toast({
+      title: isLiked ? "Retiré des favoris" : "Ajouté aux favoris",
+      description: `${name} a été ${isLiked ? "retiré de" : "ajouté à"} votre liste de favoris`,
     });
   };
 
@@ -60,7 +70,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
           variant="ghost"
           size="icon"
           className="absolute top-2 left-2 bg-white/80 hover:bg-white rounded-full"
-          onClick={() => setIsLiked(!isLiked)}
+          onClick={handleToggleFavorite}
         >
           <Heart className={`h-5 w-5 ${isLiked ? 'fill-red-500 text-red-500' : 'text-gray-500'}`} />
         </Button>
