@@ -114,3 +114,16 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes text {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+.animate-text {
+  animation: text 5s linear infinite;
+}

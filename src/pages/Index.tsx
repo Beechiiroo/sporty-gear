@@ -122,8 +122,8 @@ const Index = () => {
       <header className="sticky top-0 z-50 backdrop-blur-lg bg-white/80 border-b border-gray-200">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <Trophy className="h-8 w-8 text-blue-600" />
-            <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <Trophy className="h-8 w-8 text-blue-600 animate-bounce" />
+            <h1 className="text-2xl font-bold animate-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent bg-[length:400%] transition-all duration-500 hover:bg-[length:200%] hover:animate-text">
               SportyGear
             </h1>
           </div>
@@ -245,7 +245,7 @@ const Index = () => {
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1800')] bg-cover bg-center opacity-20" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-2xl space-y-6">
-            <h1 className="text-5xl md:text-7xl font-bold animate-fade-in">
+            <h1 className="text-5xl md:text-7xl font-bold animate-fade-in bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-purple-100">
               Elevate Your Game
             </h1>
             <p className="text-xl md:text-2xl text-gray-200 animate-fade-in delay-100">
