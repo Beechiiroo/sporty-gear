@@ -4,6 +4,8 @@ import ProductCard from "@/components/ProductCard";
 import Cart from "@/components/Cart";
 import FeaturedCarousel from "@/components/FeaturedCarousel";
 import PriceFilter from "@/components/PriceFilter";
+import RatingFilter from "@/components/RatingFilter";
+import SortOptions, { SortOption } from "@/components/SortOptions";
 import Footer from "@/components/Footer";
 import {
   NavigationMenu,
@@ -19,47 +21,94 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { ShoppingBag, Trophy, Heart, Filter, Search } from "lucide-react";
-import { useState } from "react";
+import { ShoppingBag, Trophy, Heart, Filter, Search, Store } from "lucide-react";
+import { useState, useMemo } from "react";
 import { useFavorites } from "@/stores/FavoritesStore";
 import { Switch } from "@/components/ui/switch";
 import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 
 const Index = () => {
+  // Filters state
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
   const [priceRange, setPriceRange] = useState<[number, number]>([0, 1000]);
+  const [minRating, setMinRating] = useState(0);
   const [showFavoritesOnly, setShowFavoritesOnly] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
+  const [sortOption, setSortOption] = useState<SortOption>("newest");
   const [isFilterDialogOpen, setIsFilterDialogOpen] = useState(false);
   const { favorites, isFavorite } = useFavorites();
   
-  const categories = ["All", ...new Set(products.map(p => p.category))];
+  const categories = useMemo(() => 
+    ["All", ...new Set(products.map(p => p.category))], 
+    []
+  );
   
   // Calculate min and max prices
   const minPrice = Math.min(...products.map(p => p.price));
   const maxPrice = Math.max(...products.map(p => p.price));
 
+  // Reset all filters
+  const resetFilters = () => {
+    setSelectedCategory(null);
+    setPriceRange([minPrice, maxPrice]);
+    setMinRating(0);
+    setShowFavoritesOnly(false);
+    setSearchQuery("");
+    setSortOption("newest");
+  };
+  
   // Filter products based on all criteria
-  const filteredProducts = products.filter(product => {
-    // Category filter
-    const passesCategory = selectedCategory && selectedCategory !== "All" 
-      ? product.category === selectedCategory 
-      : true;
+  const filteredProducts = useMemo(() => {
+    let result = products.filter(product => {
+      // Category filter
+      const passesCategory = selectedCategory && selectedCategory !== "All" 
+        ? product.category === selectedCategory 
+        : true;
+      
+      // Price filter
+      const passesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
+      
+      // Rating filter
+      const passesRating = (product.rating || 0) >= minRating;
+      
+      // Favorites filter
+      const passesFavorites = showFavoritesOnly ? isFavorite(product.id) : true;
+      
+      // Search filter
+      const passesSearch = searchQuery
+        ? product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          product.category.toLowerCase().includes(searchQuery.toLowerCase())
+        : true;
+  
+      return passesCategory && passesPrice && passesRating && passesFavorites && passesSearch;
+    });
     
-    // Price filter
-    const passesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
-    
-    // Favorites filter
-    const passesFavorites = showFavoritesOnly ? isFavorite(product.id) : true;
-    
-    // Search filter
-    const passesSearch = searchQuery
-      ? product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        product.category.toLowerCase().includes(searchQuery.toLowerCase())
-      : true;
+    // Sort products
+    switch (sortOption) {
+      case "price-low":
+        return result.sort((a, b) => a.price - b.price);
+      case "price-high":
+        return result.sort((a, b) => b.price - a.price);
+      case "rating":
+        return result.sort((a, b) => (b.rating || 0) - (a.rating || 0));
+      case "newest":
+      default:
+        // Using id as proxy for newest since higher id = newer
+        return result.sort((a, b) => b.id - a.id);
+    }
+  }, [products, selectedCategory, priceRange, minRating, showFavoritesOnly, searchQuery, sortOption, isFavorite]);
 
-    return passesCategory && passesPrice && passesFavorites && passesSearch;
-  });
+  // Active filter count
+  const activeFilterCount = useMemo(() => {
+    let count = 0;
+    if (selectedCategory && selectedCategory !== "All") count++;
+    if (priceRange[0] > minPrice || priceRange[1] < maxPrice) count++;
+    if (minRating > 0) count++;
+    if (showFavoritesOnly) count++;
+    if (searchQuery) count++;
+    return count;
+  }, [selectedCategory, priceRange, minRating, showFavoritesOnly, searchQuery, minPrice, maxPrice]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -92,6 +141,48 @@ const Index = () => {
                         </li>
                       ))}
                     </ul>
+                  </NavigationMenuContent>
+                </NavigationMenuItem>
+                <NavigationMenuItem>
+                  <NavigationMenuTrigger>Boutique</NavigationMenuTrigger>
+                  <NavigationMenuContent>
+                    <div className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                      <div className="rounded-md bg-gradient-to-b from-blue-600 to-purple-600 p-4 text-white">
+                        <Store className="h-8 w-8 mb-2" />
+                        <div className="mb-2 mt-4 text-lg font-medium">
+                          Notre boutique
+                        </div>
+                        <p className="text-sm leading-tight text-white/90">
+                          Découvrez notre sélection de produits de qualité pour tous les sportifs.
+                        </p>
+                      </div>
+                      <div className="p-4">
+                        <Button 
+                          variant="outline" 
+                          className="w-full justify-start text-left mb-2"
+                          onClick={() => setShowFavoritesOnly(true)}
+                        >
+                          <Heart className="mr-2 h-4 w-4" />
+                          Mes favoris
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          className="w-full justify-start text-left mb-2"
+                          onClick={() => setSortOption("rating")}
+                        >
+                          <Star className="mr-2 h-4 w-4" />
+                          Meilleures notes
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          className="w-full justify-start text-left"
+                          onClick={() => setSortOption("newest")}
+                        >
+                          <ShoppingBag className="mr-2 h-4 w-4" />
+                          Nouveautés
+                        </Button>
+                      </div>
+                    </div>
                   </NavigationMenuContent>
                 </NavigationMenuItem>
               </NavigationMenuList>
@@ -127,10 +218,15 @@ const Index = () => {
             <Button
               variant="outline"
               size="icon"
-              className="md:hidden"
+              className={`md:hidden relative ${activeFilterCount > 0 ? 'border-blue-500' : ''}`}
               onClick={() => setIsFilterDialogOpen(true)}
             >
-              <Filter className="h-5 w-5" />
+              <Filter className={`h-5 w-5 ${activeFilterCount > 0 ? 'text-blue-500' : ''}`} />
+              {activeFilterCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-blue-500 text-white rounded-full w-5 h-5 text-xs flex items-center justify-center">
+                  {activeFilterCount}
+                </span>
+              )}
             </Button>
             
             <Cart />
@@ -167,7 +263,7 @@ const Index = () => {
             {showFavoritesOnly ? "Mes Favoris" : (selectedCategory || "Tous les Produits")}
           </h2>
           
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col md:flex-row items-start md:items-center gap-4">
             <div className="md:hidden w-full">
               <Input 
                 type="text" 
@@ -178,17 +274,59 @@ const Index = () => {
               />
             </div>
             
+            <div className="flex items-center gap-2">
+              <SortOptions value={sortOption} onChange={setSortOption} />
+              
+              {activeFilterCount > 0 && (
+                <Button 
+                  variant="outline"
+                  size="sm"
+                  onClick={resetFilters}
+                  className="hidden md:flex items-center"
+                >
+                  Réinitialiser
+                  <Badge className="ml-2 bg-blue-100 text-blue-800 hover:bg-blue-200">{activeFilterCount}</Badge>
+                </Button>
+              )}
+            </div>
+            
             <div className="hidden md:flex flex-wrap gap-2">
-              {categories.map((category) => (
+              {categories.slice(0, 6).map((category) => (
                 <Button
                   key={category}
                   variant={selectedCategory === category ? "default" : "outline"}
                   onClick={() => setSelectedCategory(category)}
                   className="animate-fade-in"
+                  size="sm"
                 >
                   {category}
                 </Button>
               ))}
+              {categories.length > 6 && (
+                <NavigationMenu>
+                  <NavigationMenuList>
+                    <NavigationMenuItem>
+                      <NavigationMenuTrigger className="h-9 px-3 text-sm">Plus</NavigationMenuTrigger>
+                      <NavigationMenuContent>
+                        <ul className="grid w-[200px] gap-1 p-2">
+                          {categories.slice(6).map((category) => (
+                            <li key={category}>
+                              <Button
+                                variant={selectedCategory === category ? "default" : "ghost"}
+                                className="w-full justify-start text-left"
+                                size="sm"
+                                onClick={() => setSelectedCategory(category)}
+                              >
+                                {category}
+                              </Button>
+                            </li>
+                          ))}
+                        </ul>
+                      </NavigationMenuContent>
+                    </NavigationMenuItem>
+                  </NavigationMenuList>
+                </NavigationMenu>
+              )}
             </div>
           </div>
         </div>
@@ -204,6 +342,11 @@ const Index = () => {
               onChange={setPriceRange}
             />
             
+            <RatingFilter
+              minRating={minRating}
+              onChange={setMinRating}
+            />
+            
             <div className="p-4 bg-white/80 backdrop-blur-sm rounded-lg shadow-md border border-gray-100">
               <h3 className="font-semibold mb-4">Filtres</h3>
               
@@ -214,6 +357,16 @@ const Index = () => {
                   onCheckedChange={setShowFavoritesOnly} 
                 />
               </div>
+              
+              {activeFilterCount > 0 && (
+                <Button 
+                  variant="outline"
+                  className="w-full mt-4"
+                  onClick={resetFilters}
+                >
+                  Réinitialiser les filtres
+                </Button>
+              )}
             </div>
           </div>
           
@@ -229,12 +382,7 @@ const Index = () => {
                 <Button 
                   variant="outline"
                   className="mt-4"
-                  onClick={() => {
-                    setSelectedCategory(null);
-                    setPriceRange([minPrice, maxPrice]);
-                    setShowFavoritesOnly(false);
-                    setSearchQuery("");
-                  }}
+                  onClick={resetFilters}
                 >
                   Réinitialiser les filtres
                 </Button>
@@ -287,6 +435,11 @@ const Index = () => {
               onChange={setPriceRange}
             />
             
+            <RatingFilter
+              minRating={minRating}
+              onChange={setMinRating}
+            />
+            
             <div className="flex items-center justify-between">
               <span>Favoris uniquement</span>
               <Switch 
@@ -302,12 +455,7 @@ const Index = () => {
             <Button 
               variant="outline" 
               className="w-full"
-              onClick={() => {
-                setSelectedCategory(null);
-                setPriceRange([minPrice, maxPrice]);
-                setShowFavoritesOnly(false);
-                setSearchQuery("");
-              }}
+              onClick={resetFilters}
             >
               Réinitialiser
             </Button>

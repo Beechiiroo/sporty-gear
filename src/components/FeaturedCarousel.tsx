@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import {
   Carousel,
   CarouselContent,
@@ -12,7 +12,12 @@ import ProductCard from './ProductCard';
 import { Trophy } from 'lucide-react';
 
 const FeaturedCarousel = () => {
-  const featuredProducts = products.slice(0, 4);
+  // Get top rated products for featured section
+  const featuredProducts = useMemo(() => {
+    return [...products]
+      .sort((a, b) => (b.rating || 0) - (a.rating || 0))
+      .slice(0, 6);
+  }, []);
 
   return (
     <div className="py-16 container mx-auto relative">

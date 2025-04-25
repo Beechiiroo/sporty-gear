@@ -24,7 +24,8 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
   const formatPrice = (price: number) => {
     return new Intl.NumberFormat('fr-FR', {
       style: 'currency',
-      currency: 'EUR'
+      currency: 'EUR',
+      maximumFractionDigits: 0
     }).format(price);
   };
 
@@ -46,6 +47,10 @@ const PriceFilter: React.FC<PriceFilterProps> = ({
         onValueChange={handleValueChange}
         className="mt-6"
       />
+      <div className="flex justify-between text-xs text-gray-500 mt-2">
+        <span>{formatPrice(minPrice)}</span>
+        <span>{formatPrice(maxPrice)}</span>
+      </div>
     </div>
   );
 };

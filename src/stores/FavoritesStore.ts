@@ -1,5 +1,6 @@
 
 import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 interface FavoritesState {
   favorites: number[];
@@ -9,27 +10,34 @@ interface FavoritesState {
   isFavorite: (id: number) => boolean;
 }
 
-export const useFavorites = create<FavoritesState>((set, get) => ({
-  favorites: [],
-  
-  addFavorite: (id) => 
-    set((state) => ({
-      favorites: [...state.favorites, id]
-    })),
-  
-  removeFavorite: (id) =>
-    set((state) => ({
-      favorites: state.favorites.filter(favId => favId !== id)
-    })),
-  
-  toggleFavorite: (id) => {
-    const isFavorite = get().isFavorite(id);
-    if (isFavorite) {
-      get().removeFavorite(id);
-    } else {
-      get().addFavorite(id);
+export const useFavorites = create<FavoritesState>()(
+  persist(
+    (set, get) => ({
+      favorites: [],
+      
+      addFavorite: (id) => 
+        set((state) => ({
+          favorites: [...state.favorites, id]
+        })),
+      
+      removeFavorite: (id) =>
+        set((state) => ({
+          favorites: state.favorites.filter(favId => favId !== id)
+        })),
+      
+      toggleFavorite: (id) => {
+        const isFavorite = get().isFavorite(id);
+        if (isFavorite) {
+          get().removeFavorite(id);
+        } else {
+          get().addFavorite(id);
+        }
+      },
+      
+      isFavorite: (id) => get().favorites.includes(id)
+    }),
+    {
+      name: 'favorites-storage',
     }
-  },
-  
-  isFavorite: (id) => get().favorites.includes(id)
-}));
+  )
+);

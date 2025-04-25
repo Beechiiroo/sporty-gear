@@ -19,10 +19,11 @@ interface ProductCardProps {
   price: number;
   image: string;
   category: string;
+  rating?: number;
   featured?: boolean;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, category, featured }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, category, rating = 5, featured }) => {
   const addToCart = useCart(state => state.addItem);
   const { toast } = useToast();
   const { toggleFavorite, isFavorite } = useFavorites();
@@ -50,6 +51,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
       currency: 'EUR'
     }).format(price);
   };
+
+  // Calculate filled and empty stars
+  const filledStars = Math.floor(rating);
+  const hasHalfStar = rating % 1 >= 0.5;
 
   return (
     <Card className="group overflow-hidden transition-all duration-300 hover:shadow-xl relative">
@@ -79,8 +84,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
       <CardContent className="p-4">
         <div className="flex items-center gap-1 text-yellow-500 mb-2">
           {[...Array(5)].map((_, i) => (
-            <Star key={i} className="h-4 w-4 fill-current" />
+            <Star 
+              key={i} 
+              className={`h-4 w-4 ${i < filledStars ? 'fill-current' : (i === filledStars && hasHalfStar ? 'fill-[50%]' : '')}`} 
+            />
           ))}
+          <span className="text-xs text-gray-600 ml-1">({rating.toFixed(1)})</span>
         </div>
         <div className="flex flex-col gap-2">
           <span className="text-sm font-medium text-blue-600">{category}</span>
