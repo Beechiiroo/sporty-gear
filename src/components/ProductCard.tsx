@@ -5,7 +5,8 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart, Star, Heart } from "lucide-react";
 import { useCart } from '@/stores/CartStore';
 import { useFavorites } from '@/stores/FavoritesStore';
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
+import useSound from '@/hooks/useSound';
 import {
   Tooltip,
   TooltipContent,
@@ -28,9 +29,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
   const { toast } = useToast();
   const { toggleFavorite, isFavorite } = useFavorites();
   const isLiked = isFavorite(id);
+  const { playAddToCartSound } = useSound();
 
   const handleAddToCart = () => {
     addToCart({ id, name, price, image, quantity: 1 });
+    playAddToCartSound();
     toast({
       title: "Ajouté au panier",
       description: `${name} a été ajouté à votre panier`,
