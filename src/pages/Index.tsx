@@ -21,7 +21,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { ShoppingBag, Trophy, Heart, Filter, Search, Store } from "lucide-react";
+import { ShoppingBag, Trophy, Heart, Filter, Search, Store, Star } from "lucide-react";
 import { useState, useMemo } from "react";
 import { useFavorites } from "@/stores/FavoritesStore";
 import { Switch } from "@/components/ui/switch";
