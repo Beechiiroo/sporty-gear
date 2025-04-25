@@ -1,4 +1,3 @@
-
 import { products } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
 import Cart from "@/components/Cart";
@@ -109,6 +108,13 @@ const Index = () => {
     if (searchQuery) count++;
     return count;
   }, [selectedCategory, priceRange, minRating, showFavoritesOnly, searchQuery, minPrice, maxPrice]);
+
+  const scrollToProducts = () => {
+    const productsSection = document.getElementById('products-section');
+    if (productsSection) {
+      productsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
@@ -245,7 +251,11 @@ const Index = () => {
             <p className="text-xl md:text-2xl text-gray-200 animate-fade-in delay-100">
               Premium sports equipment for champions. Discover our professional-grade gear.
             </p>
-            <Button size="lg" className="animate-fade-in delay-200">
+            <Button 
+              size="lg" 
+              className="animate-fade-in delay-200 bg-blue-600 hover:bg-blue-700"
+              onClick={scrollToProducts}
+            >
               <ShoppingBag className="mr-2 h-5 w-5" />
               Shop Now
             </Button>
@@ -257,7 +267,7 @@ const Index = () => {
       <FeaturedCarousel />
 
       {/* Products Grid */}
-      <div className="container mx-auto px-4 py-16">
+      <div id="products-section" className="container mx-auto px-4 py-16">
         <div className="flex flex-col md:flex-row justify-between mb-8">
           <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4 md:mb-0">
             {showFavoritesOnly ? "Mes Favoris" : (selectedCategory || "Tous les Produits")}

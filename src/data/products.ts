@@ -1,4 +1,3 @@
-
 export const products = [
   {
     id: 1,
@@ -199,5 +198,45 @@ export const products = [
     image: "https://images.unsplash.com/photo-1566577739112-5180d4bf9390?w=800&auto=format&fit=crop",
     category: "Football Américain",
     rating: 4.4
+  },
+  {
+    id: 26,
+    name: "Tapis de Yoga Premium",
+    price: 49.99,
+    image: "https://images.unsplash.com/photo-1592187270271-9f4b2fdd3f4f?w=800&auto=format&fit=crop",
+    category: "Yoga",
+    rating: 4.8
+  },
+  {
+    id: 27,
+    name: "Kit de Musculation",
+    price: 299.99,
+    image: "https://images.unsplash.com/photo-1517344368193-41552b6ad3f5?w=800&auto=format&fit=crop",
+    category: "Fitness",
+    rating: 4.9
+  },
+  {
+    id: 28,
+    name: "Raquette de Tennis Pro",
+    price: 189.99,
+    image: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800&auto=format&fit=crop",
+    category: "Tennis",
+    rating: 4.7
+  },
+  {
+    id: 29,
+    name: "Ballon de Basketball Premium",
+    price: 39.99,
+    image: "https://images.unsplash.com/photo-1519861531473-9200262188bf?w=800&auto=format&fit=crop",
+    category: "Basketball",
+    rating: 4.6
+  },
+  {
+    id: 30,
+    name: "Corde à Sauter Pro",
+    price: 29.99,
+    image: "https://images.unsplash.com/photo-1583454110551-21f2fa2afe61?w=800&auto=format&fit=crop",
+    category: "Fitness",
+    rating: 4.5
   }
 ];
