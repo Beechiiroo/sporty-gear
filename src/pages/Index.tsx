@@ -117,13 +117,13 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
+    <div className="min-h-screen bg-gradient-to-br from-black to-orange-950">
       {/* Header */}
-      <header className="sticky top-0 z-50 backdrop-blur-lg bg-white/80 border-b border-gray-200">
+      <header className="sticky top-0 z-50 backdrop-blur-lg bg-black/80 border-b border-orange-500/20">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <Trophy className="h-8 w-8 text-blue-600 animate-bounce" />
-            <h1 className="text-2xl font-bold animate-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent bg-[length:400%] transition-all duration-500 hover:bg-[length:200%] hover:animate-text">
+            <Trophy className="h-8 w-8 text-orange-500 animate-bounce" />
+            <h1 className="text-2xl font-bold animate-text bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 bg-clip-text text-transparent bg-[length:400%] transition-all duration-500 hover:bg-[length:200%] hover:animate-text">
               SportyGear
             </h1>
           </div>
@@ -195,12 +195,12 @@ const Index = () => {
             </NavigationMenu>
           </div>
 
-          <div className="hidden md:flex items-center border rounded-full px-4 py-2 bg-white flex-grow mx-4 max-w-md">
-            <Search className="h-4 w-4 text-gray-500 mr-2" />
+          <div className="hidden md:flex items-center border-orange-500/20 border rounded-full px-4 py-2 bg-black/50 flex-grow mx-4 max-w-md">
+            <Search className="h-4 w-4 text-orange-500 mr-2" />
             <Input 
               type="text" 
               placeholder="Rechercher des produits..."
-              className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 px-0"
+              className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 px-0 bg-transparent text-white placeholder:text-orange-500/50"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
             />
@@ -241,19 +241,19 @@ const Index = () => {
       </header>
 
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-blue-900 via-blue-800 to-purple-900 text-white min-h-[600px] flex items-center">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1800')] bg-cover bg-center opacity-20" />
+      <div className="relative overflow-hidden bg-gradient-to-r from-black via-orange-950 to-black text-white min-h-[600px] flex items-center">
+        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1494891848038-7bd202a2afeb')] bg-cover bg-center opacity-20" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-2xl space-y-6">
-            <h1 className="text-5xl md:text-7xl font-bold animate-fade-in bg-clip-text text-transparent bg-gradient-to-r from-white via-blue-100 to-purple-100">
+            <h1 className="text-5xl md:text-7xl font-bold animate-fade-in bg-clip-text text-transparent bg-gradient-to-r from-white via-orange-200 to-orange-400">
               Elevate Your Game
             </h1>
-            <p className="text-xl md:text-2xl text-gray-200 animate-fade-in delay-100">
+            <p className="text-xl md:text-2xl text-orange-200/80 animate-fade-in delay-100">
               Premium sports equipment for champions. Discover our professional-grade gear.
             </p>
             <Button 
               size="lg" 
-              className="animate-fade-in delay-200 bg-blue-600 hover:bg-blue-700"
+              className="animate-fade-in delay-200 bg-orange-500 hover:bg-orange-600 text-white"
               onClick={scrollToProducts}
             >
               <ShoppingBag className="mr-2 h-5 w-5" />
@@ -269,7 +269,7 @@ const Index = () => {
       {/* Products Grid */}
       <div id="products-section" className="container mx-auto px-4 py-16">
         <div className="flex flex-col md:flex-row justify-between mb-8">
-          <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4 md:mb-0">
+          <h2 className="text-3xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent mb-4 md:mb-0">
             {showFavoritesOnly ? "Mes Favoris" : (selectedCategory || "Tous les Produits")}
           </h2>
           

@@ -60,10 +60,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
   const hasHalfStar = rating % 1 >= 0.5;
 
   return (
-    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-xl relative">
+    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-orange-500/10 relative bg-black/50 border-orange-500/20">
       {featured && (
         <div className="absolute top-2 right-2 z-10">
-          <span className="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-1 text-xs font-medium text-yellow-800">
+          <span className="inline-flex items-center rounded-full bg-orange-100 px-2.5 py-1 text-xs font-medium text-orange-800">
             Produit Vedette
           </span>
         </div>
@@ -77,30 +77,30 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
         <Button
           variant="ghost"
           size="icon"
-          className="absolute top-2 left-2 bg-white/80 hover:bg-white rounded-full"
+          className="absolute top-2 left-2 bg-black/80 hover:bg-black rounded-full"
           onClick={handleToggleFavorite}
         >
-          <Heart className={`h-5 w-5 ${isLiked ? 'fill-red-500 text-red-500' : 'text-gray-500'}`} />
+          <Heart className={`h-5 w-5 ${isLiked ? 'fill-orange-500 text-orange-500' : 'text-white'}`} />
         </Button>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
       <CardContent className="p-4">
-        <div className="flex items-center gap-1 text-yellow-500 mb-2">
+        <div className="flex items-center gap-1 text-orange-500 mb-2">
           {[...Array(5)].map((_, i) => (
             <Star 
               key={i} 
               className={`h-4 w-4 ${i < filledStars ? 'fill-current' : (i === filledStars && hasHalfStar ? 'fill-[50%]' : '')}`} 
             />
           ))}
-          <span className="text-xs text-gray-600 ml-1">({rating.toFixed(1)})</span>
+          <span className="text-xs text-orange-200/80 ml-1">({rating.toFixed(1)})</span>
         </div>
         <div className="flex flex-col gap-2">
-          <span className="text-sm font-medium text-blue-600">{category}</span>
-          <h3 className="font-semibold text-lg mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
+          <span className="text-sm font-medium text-orange-500">{category}</span>
+          <h3 className="font-semibold text-lg mb-2 text-white group-hover:text-orange-400 transition-colors">
             {name}
           </h3>
           <div className="flex items-center justify-between">
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+            <span className="text-xl font-bold bg-gradient-to-r from-orange-400 to-orange-600 bg-clip-text text-transparent">
               {formatPrice(price)}
             </span>
             <TooltipProvider>
@@ -110,7 +110,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
                     onClick={handleAddToCart}
                     variant="default"
                     size="sm"
-                    className="bg-blue-600 hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
+                    className="bg-orange-500 hover:bg-orange-600 transition-all duration-300 transform hover:scale-105 text-white"
                   >
                     <ShoppingCart className="w-4 h-4 mr-2" />
                     Ajouter
