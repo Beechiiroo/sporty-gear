@@ -21,12 +21,12 @@ const FeaturedCarousel = () => {
 
   return (
     <div className="py-16 container mx-auto relative">
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-pink-500/10 rounded-3xl blur-3xl -z-10" />
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 via-purple-500/10 to-indigo-500/10 rounded-3xl blur-3xl -z-10" />
       
       <div className="relative mb-12">
         <div className="flex items-center gap-4 justify-center mb-4">
-          <Trophy className="h-10 w-10 text-yellow-500" />
-          <h2 className="text-4xl md:text-5xl font-bold text-center bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 bg-clip-text text-transparent">
+          <Trophy className="h-10 w-10 text-blue-500" />
+          <h2 className="text-4xl md:text-5xl font-bold text-center bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
             Produits Vedettes
           </h2>
         </div>
