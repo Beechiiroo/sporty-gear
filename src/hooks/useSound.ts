@@ -2,9 +2,9 @@
 const useSound = () => {
   const playAddToCartSound = () => {
     const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3');
-    audio.volume = 0.3; // Reduce volume to 30%
+    audio.volume = 1.0; // Set volume to maximum (100%)
     audio.play().catch((error) => {
-      console.warn('Audio playback failed:', error);
+      console.error('Audio playback failed:', error);
     });
   };
 
