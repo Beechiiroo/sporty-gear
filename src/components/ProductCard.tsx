@@ -55,12 +55,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
     }).format(price);
   };
 
-  // Calculate filled and empty stars
   const filledStars = Math.floor(rating);
   const hasHalfStar = rating % 1 >= 0.5;
 
   return (
-    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10 relative bg-black/50 border-blue-500/20">
+    <Card className="group overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/10 relative bg-white border-blue-500/20">
       {featured && (
         <div className="absolute top-2 right-2 z-10">
           <span className="inline-flex items-center rounded-full bg-blue-100 px-2.5 py-1 text-xs font-medium text-blue-800">
@@ -77,12 +76,12 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
         <Button
           variant="ghost"
           size="icon"
-          className="absolute top-2 left-2 bg-black/80 hover:bg-black rounded-full"
+          className="absolute top-2 left-2 bg-white/80 hover:bg-white rounded-full"
           onClick={handleToggleFavorite}
         >
-          <Heart className={`h-5 w-5 ${isLiked ? 'fill-blue-500 text-blue-500' : 'text-white'}`} />
+          <Heart className={`h-5 w-5 ${isLiked ? 'fill-blue-500 text-blue-500' : 'text-gray-500'}`} />
         </Button>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
       </div>
       <CardContent className="p-4">
         <div className="flex items-center gap-1 text-blue-500 mb-2">
@@ -96,11 +95,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
         </div>
         <div className="flex flex-col gap-2">
           <span className="text-sm font-medium text-blue-500">{category}</span>
-          <h3 className="font-semibold text-lg mb-2 text-white group-hover:text-blue-400 transition-colors">
+          <h3 className="font-semibold text-lg mb-2 text-gray-800 group-hover:text-blue-600 transition-colors">
             {name}
           </h3>
           <div className="flex items-center justify-between">
-            <span className="text-xl font-bold bg-gradient-to-r from-blue-400 to-blue-600 bg-clip-text text-transparent">
+            <span className="text-xl font-bold text-blue-600">
               {formatPrice(price)}
             </span>
             <TooltipProvider>

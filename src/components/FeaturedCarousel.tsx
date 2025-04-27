@@ -12,7 +12,6 @@ import ProductCard from './ProductCard';
 import { Trophy } from 'lucide-react';
 
 const FeaturedCarousel = () => {
-  // Get top rated products for featured section
   const featuredProducts = useMemo(() => {
     return [...products]
       .sort((a, b) => (b.rating || 0) - (a.rating || 0))
@@ -34,7 +33,6 @@ const FeaturedCarousel = () => {
           Découvrez notre sélection exclusive de produits haut de gamme, choisis pour leur qualité exceptionnelle et leurs performances.
         </p>
         
-        {/* Decorative elements */}
         <div className="absolute top-0 left-1/4 w-8 h-8 bg-blue-500/30 rounded-full blur-sm -z-10"></div>
         <div className="absolute bottom-0 right-1/3 w-6 h-6 bg-purple-500/20 rounded-full blur-sm -z-10"></div>
       </div>
@@ -59,7 +57,6 @@ const FeaturedCarousel = () => {
         <CarouselNext className="hidden md:flex -right-4 bg-white/80 hover:bg-white shadow-lg" />
       </Carousel>
       
-      {/* Decorative dots pattern */}
       <div className="hidden md:block absolute right-10 bottom-10 w-24 h-24">
         <div className="grid grid-cols-3 gap-2">
           {[...Array(9)].map((_, i) => (
