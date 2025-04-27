@@ -117,13 +117,13 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black to-orange-950">
+    <div className="min-h-screen bg-gradient-to-br from-blue-950 via-purple-950 to-blue-950">
       {/* Header */}
-      <header className="sticky top-0 z-50 backdrop-blur-lg bg-black/80 border-b border-orange-500/20">
+      <header className="sticky top-0 z-50 backdrop-blur-lg bg-blue-900/80 border-b border-purple-500/20">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
-            <Trophy className="h-8 w-8 text-orange-500 animate-bounce" />
-            <h1 className="text-2xl font-bold animate-text bg-gradient-to-r from-orange-400 via-orange-500 to-orange-600 bg-clip-text text-transparent bg-[length:400%] transition-all duration-500 hover:bg-[length:200%] hover:animate-text">
+            <Trophy className="h-8 w-8 text-blue-500 animate-bounce" />
+            <h1 className="text-2xl font-bold animate-text bg-gradient-to-r from-blue-400 via-purple-500 to-blue-400 bg-clip-text text-transparent bg-[length:400%] transition-all duration-500 hover:bg-[length:200%] hover:animate-text">
               SportyGear
             </h1>
           </div>
@@ -241,19 +241,19 @@ const Index = () => {
       </header>
 
       {/* Hero Section */}
-      <div className="relative overflow-hidden bg-gradient-to-r from-black via-orange-950 to-black text-white min-h-[600px] flex items-center">
+      <div className="relative overflow-hidden bg-gradient-to-r from-blue-950 via-purple-950 to-blue-950 text-white min-h-[600px] flex items-center">
         <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1494891848038-7bd202a2afeb')] bg-cover bg-center opacity-20" />
         <div className="container mx-auto px-4 relative z-10">
           <div className="max-w-2xl space-y-6">
-            <h1 className="text-5xl md:text-7xl font-bold animate-fade-in bg-clip-text text-transparent bg-gradient-to-r from-white via-orange-200 to-orange-400">
+            <h1 className="text-5xl md:text-7xl font-bold animate-fade-in bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-200 to-blue-400">
               Elevate Your Game
             </h1>
-            <p className="text-xl md:text-2xl text-orange-200/80 animate-fade-in delay-100">
+            <p className="text-xl md:text-2xl text-purple-200/80 animate-fade-in delay-100">
               Premium sports equipment for champions. Discover our professional-grade gear.
             </p>
             <Button 
               size="lg" 
-              className="animate-fade-in delay-200 bg-orange-500 hover:bg-orange-600 text-white"
+              className="animate-fade-in delay-200 bg-blue-500 hover:bg-blue-600 text-white"
               onClick={scrollToProducts}
             >
               <ShoppingBag className="mr-2 h-5 w-5" />

@@ -1,11 +1,10 @@
-
 import React from "react";
 import { Trophy } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-gray-100">
+    <footer className="bg-blue-950 text-gray-100">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
