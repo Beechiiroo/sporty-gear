@@ -8,7 +8,15 @@ const useSound = () => {
     });
   };
 
-  return { playAddToCartSound };
+  const playFavoriteSound = () => {
+    const audio = new Audio('https://assets.mixkit.co/active_storage/sfx/2358/2358-preview.mp3');
+    audio.volume = 0.8;
+    audio.play().catch((error) => {
+      console.error('Audio playback failed:', error);
+    });
+  };
+
+  return { playAddToCartSound, playFavoriteSound };
 };
 
 export default useSound;
