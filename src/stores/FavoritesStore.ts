@@ -1,8 +1,7 @@
 
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
-import { toast } from "@/components/ui/use-toast";
-import useSound from '@/hooks/useSound';
+import { toast } from "@/hooks/use-toast";
 
 interface FavoritesState {
   favorites: number[];
@@ -17,9 +16,6 @@ interface FavoritesState {
 export const useFavorites = create<FavoritesState>()(
   persist(
     (set, get) => {
-      // Initialize sound outside of the component to avoid React hooks rules violations
-      const { playFavoriteSound } = useSound();
-      
       return {
         favorites: [],
         
@@ -27,7 +23,6 @@ export const useFavorites = create<FavoritesState>()(
           set((state) => ({
             favorites: [...state.favorites, id]
           }));
-          playFavoriteSound();
           toast({
             title: "Ajouté aux favoris",
             description: "Le produit a été ajouté à vos favoris"

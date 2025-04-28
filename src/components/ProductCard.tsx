@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -39,7 +40,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
     });
   };
 
-  const handleToggleFavorite = () => {
+  const handleToggleFavorite = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Prevent navigation when clicking the heart icon
     toggleFavorite(id);
     if (!isLiked) {
       playFavoriteSound();
@@ -84,6 +86,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
                   size="icon"
                   className="absolute top-2 left-2 bg-white/80 hover:bg-white rounded-full"
                   onClick={handleToggleFavorite}
+                  type="button"
                 >
                   <Heart className={`h-5 w-5 transform transition-all duration-300 ${isLiked ? 'fill-red-500 text-red-500 scale-110' : 'text-gray-500'}`} />
                 </Button>
