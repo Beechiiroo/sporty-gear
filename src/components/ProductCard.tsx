@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -67,30 +66,35 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
           </span>
         </div>
       )}
-      <div className="relative aspect-square overflow-hidden">
-        <img 
-          src={image} 
-          alt={name}
-          className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
-        />
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button
-                variant="ghost"
-                size="icon"
-                className="absolute top-2 left-2 bg-white/80 hover:bg-white rounded-full"
-                onClick={handleToggleFavorite}
-              >
-                <Heart className={`h-5 w-5 transform transition-all duration-300 ${isLiked ? 'fill-red-500 text-red-500 scale-110' : 'text-gray-500'}`} />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>
-              <p>{isLiked ? "Retirer des favoris" : "Ajouter aux favoris"}</p>
-            </TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <div 
+        className="relative aspect-square overflow-hidden cursor-pointer"
+        onClick={() => window.location.href = `/product/${id}`}
+      >
+        <div className="relative aspect-square overflow-hidden">
+          <img 
+            src={image} 
+            alt={name}
+            className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
+          />
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  variant="ghost"
+                  size="icon"
+                  className="absolute top-2 left-2 bg-white/80 hover:bg-white rounded-full"
+                  onClick={handleToggleFavorite}
+                >
+                  <Heart className={`h-5 w-5 transform transition-all duration-300 ${isLiked ? 'fill-red-500 text-red-500 scale-110' : 'text-gray-500'}`} />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>{isLiked ? "Retirer des favoris" : "Ajouter aux favoris"}</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+        </div>
       </div>
       <CardContent className="p-4">
         <div className="flex items-center gap-1 text-yellow-500 mb-2">
