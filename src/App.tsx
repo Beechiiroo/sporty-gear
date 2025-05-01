@@ -9,6 +9,7 @@ import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
 import ProductDetails from "./pages/ProductDetails";
 import RobotVerification from "./components/RobotVerification";
+import Portfolio from "./pages/Portfolio";
 
 const queryClient = new QueryClient();
 
@@ -35,6 +36,7 @@ const App = () => {
             <Routes>
               <Route path="/" element={<Index />} />
               <Route path="/product/:id" element={<ProductDetails />} />
+              <Route path="/portfolio" element={<Portfolio />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </BrowserRouter>
