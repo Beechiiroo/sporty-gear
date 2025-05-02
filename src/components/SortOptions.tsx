@@ -7,7 +7,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ArrowUpDown, Check } from "lucide-react";
+import { ArrowUpDown, Check, Percent } from "lucide-react";
 
 export type SortOption = 'newest' | 'price-low' | 'price-high' | 'rating' | 'popularity' | 'discount';
 
@@ -50,7 +50,10 @@ const SortOptions: React.FC<SortOptionsProps> = ({ value, onChange }) => {
             {value === 'price-high' && <Check className="h-4 w-4" />}
           </SelectItem>
           <SelectItem value="discount" className="flex items-center justify-between">
-            <span>Remises</span>
+            <div className="flex items-center gap-2">
+              <Percent className="h-4 w-4 text-red-500" />
+              <span>Remises</span>
+            </div>
             {value === 'discount' && <Check className="h-4 w-4" />}
           </SelectItem>
           

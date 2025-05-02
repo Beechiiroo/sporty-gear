@@ -1,7 +1,8 @@
 
 import React from "react";
-import { Trophy } from "lucide-react";
+import { Trophy, Info, HelpCircle, Contact, Blog } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -108,24 +109,24 @@ const Footer = () => {
             <h3 className="text-lg font-medium text-white">À Propos</h3>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Notre Histoire
-                </a>
+                <Link to="/notre-histoire" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+                  <Info className="h-4 w-4" /> Notre Histoire
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Contact
-                </a>
+                <Link to="/contact" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+                  <Contact className="h-4 w-4" /> Contact
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  Blog
-                </a>
+                <Link to="/blog" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+                  <Blog className="h-4 w-4" /> Blog
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                  FAQ
-                </a>
+                <Link to="/faq" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2">
+                  <HelpCircle className="h-4 w-4" /> FAQ
+                </Link>
               </li>
             </ul>
           </div>
@@ -138,11 +139,12 @@ const Footer = () => {
                 <span className="text-white font-medium">Bechir Chaieb</span>
                 <span className="text-blue-400">Développeur Full Stack Tunisien</span>
                 <p className="text-gray-400 text-sm mt-2">
-                  Passionné par le développement web et la création d'applications intuitives et performantes.
+                  Passionné par le développement web, âgé de 21 ans et basé à Sfax, Tunisie. 
+                  Spécialisé dans la création d'applications intuitives et performantes.
                 </p>
                 <div className="flex mt-2 pt-2 border-t border-gray-700">
                   <Button variant="link" className="text-blue-400 p-0">
-                    Portfolio
+                    <Link to="/portfolio">Portfolio</Link>
                   </Button>
                   <Button variant="link" className="text-blue-400 p-0 ml-4">
                     LinkedIn
