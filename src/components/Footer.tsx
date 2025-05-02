@@ -1,6 +1,6 @@
 
 import React from "react";
-import { Trophy, Info, HelpCircle, Contact, Blog } from "lucide-react";
+import { Trophy, Info, HelpCircle, Contact, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 
@@ -120,7 +120,7 @@ const Footer = () => {
               </li>
               <li>
                 <Link to="/blog" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2">
-                  <Blog className="h-4 w-4" /> Blog
+                  <BookOpen className="h-4 w-4" /> Blog
                 </Link>
               </li>
               <li>
