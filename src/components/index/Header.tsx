@@ -2,9 +2,11 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import Cart from "@/components/Cart";
-import { Filter, Heart, Search, Store, Star, ShoppingBag } from "lucide-react";
+import { Filter, Heart, Search, Store, Star, ShoppingBag, Trophy } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { useFavorites } from "@/stores/FavoritesStore";
+import LanguageSwitcher from "@/components/LanguageSwitcher";
+import { useLanguage } from "@/contexts/LanguageContext";
 import {
   NavigationMenu,
   NavigationMenuContent,
@@ -39,6 +41,7 @@ const Header = ({
   categories,
 }: HeaderProps) => {
   const { favorites } = useFavorites();
+  const { t } = useLanguage();
 
   return (
     <header className="sticky top-0 z-50 backdrop-blur-lg bg-white/80 border-b border-gray-200">
@@ -54,7 +57,7 @@ const Header = ({
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>Catégories</NavigationMenuTrigger>
+                <NavigationMenuTrigger>{t('categories')}</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
                     {categories.map((category) => (
@@ -72,16 +75,16 @@ const Header = ({
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>Boutique</NavigationMenuTrigger>
+                <NavigationMenuTrigger>{t('shop')}</NavigationMenuTrigger>
                 <NavigationMenuContent>
                   <div className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
                     <div className="rounded-md bg-gradient-to-b from-blue-600 to-purple-600 p-4 text-white">
                       <Store className="h-8 w-8 mb-2" />
                       <div className="mb-2 mt-4 text-lg font-medium">
-                        Notre boutique
+                        {t('shop')}
                       </div>
                       <p className="text-sm leading-tight text-white/90">
-                        Découvrez notre sélection de produits de qualité pour tous les sportifs.
+                        {t('footer.description')}
                       </p>
                     </div>
                     <div className="p-4">
@@ -91,7 +94,7 @@ const Header = ({
                         onClick={() => setShowFavoritesOnly(true)}
                       >
                         <Heart className="mr-2 h-4 w-4" />
-                        Mes favoris
+                        {t('favorites')}
                       </Button>
                       <Button 
                         variant="outline" 
@@ -99,7 +102,7 @@ const Header = ({
                         onClick={() => setSortOption("rating")}
                       >
                         <Star className="mr-2 h-4 w-4" />
-                        Meilleures notes
+                        {t('bestRated')}
                       </Button>
                       <Button 
                         variant="outline" 
@@ -107,7 +110,7 @@ const Header = ({
                         onClick={() => setSortOption("newest")}
                       >
                         <ShoppingBag className="mr-2 h-4 w-4" />
-                        Nouveautés
+                        {t('newItems')}
                       </Button>
                     </div>
                   </div>
@@ -121,7 +124,7 @@ const Header = ({
           <Search className="h-4 w-4 text-gray-500 mr-2" />
           <Input 
             type="text" 
-            placeholder="Rechercher des produits..."
+            placeholder={t('search')}
             className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 px-0"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
@@ -129,6 +132,8 @@ const Header = ({
         </div>
         
         <div className="flex items-center gap-2">
+          <LanguageSwitcher />
+          
           <Button 
             variant="outline" 
             size="icon"
@@ -163,8 +168,5 @@ const Header = ({
     </header>
   );
 };
-
-// Need to add Trophy import here
-import { Trophy } from "lucide-react";
 
 export default Header;

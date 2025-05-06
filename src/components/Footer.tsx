@@ -3,8 +3,11 @@ import React from "react";
 import { Trophy, Info, HelpCircle, Contact, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const Footer = () => {
+  const { t } = useLanguage();
+  
   return (
     <footer className="bg-gray-900 text-gray-100">
       <div className="container mx-auto px-4 py-12">
@@ -16,7 +19,7 @@ const Footer = () => {
               <h2 className="text-2xl font-bold text-white">SportyGear</h2>
             </div>
             <p className="text-gray-400">
-              Votre boutique en ligne pour tout équipement sportif de qualité professionnelle.
+              {t('footer.description')}
             </p>
             <div className="flex space-x-4">
               <Button size="icon" variant="ghost" className="rounded-full hover:bg-blue-800">
@@ -74,7 +77,7 @@ const Footer = () => {
 
           {/* Categories */}
           <div className="col-span-1 space-y-4">
-            <h3 className="text-lg font-medium text-white">Catégories</h3>
+            <h3 className="text-lg font-medium text-white">{t('footer.categories')}</h3>
             <ul className="space-y-2">
               <li>
                 <a href="#" className="text-gray-400 hover:text-white transition-colors">
@@ -106,26 +109,26 @@ const Footer = () => {
 
           {/* About */}
           <div className="col-span-1 space-y-4">
-            <h3 className="text-lg font-medium text-white">À Propos</h3>
+            <h3 className="text-lg font-medium text-white">{t('footer.about')}</h3>
             <ul className="space-y-2">
               <li>
                 <Link to="/notre-histoire" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2">
-                  <Info className="h-4 w-4" /> Notre Histoire
+                  <Info className="h-4 w-4" /> {t('ourStory')}
                 </Link>
               </li>
               <li>
                 <Link to="/contact" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2">
-                  <Contact className="h-4 w-4" /> Contact
+                  <Contact className="h-4 w-4" /> {t('contact')}
                 </Link>
               </li>
               <li>
                 <Link to="/blog" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2">
-                  <BookOpen className="h-4 w-4" /> Blog
+                  <BookOpen className="h-4 w-4" /> {t('blog')}
                 </Link>
               </li>
               <li>
                 <Link to="/faq" className="text-gray-400 hover:text-white transition-colors flex items-center gap-2">
-                  <HelpCircle className="h-4 w-4" /> FAQ
+                  <HelpCircle className="h-4 w-4" /> {t('faq')}
                 </Link>
               </li>
             </ul>
@@ -133,7 +136,7 @@ const Footer = () => {
 
           {/* Developer Info */}
           <div className="col-span-1 space-y-4">
-            <h3 className="text-lg font-medium text-white">Développeur</h3>
+            <h3 className="text-lg font-medium text-white">{t('footer.developer')}</h3>
             <div className="bg-gray-800 p-4 rounded-lg">
               <div className="flex flex-col space-y-2">
                 <span className="text-white font-medium">Bechir Chaieb</span>
@@ -159,12 +162,12 @@ const Footer = () => {
         </div>
 
         <div className="mt-12 pt-8 border-t border-gray-800 text-center text-gray-400 text-sm">
-          <p>© 2025 SportyGear. Tous droits réservés.</p>
+          <p>© 2025 SportyGear. {t('footer.rights')}</p>
           <div className="flex justify-center mt-4 space-x-6">
-            <a href="#" className="hover:text-white transition-colors">Politique de confidentialité</a>
-            <a href="#" className="hover:text-white transition-colors">Conditions d'utilisation</a>
-            <a href="#" className="hover:text-white transition-colors">Livraisons</a>
-            <a href="#" className="hover:text-white transition-colors">Retours</a>
+            <a href="#" className="hover:text-white transition-colors">{t('footer.privacy')}</a>
+            <a href="#" className="hover:text-white transition-colors">{t('footer.terms')}</a>
+            <a href="#" className="hover:text-white transition-colors">{t('footer.shipping')}</a>
+            <a href="#" className="hover:text-white transition-colors">{t('footer.returns')}</a>
           </div>
         </div>
       </div>
