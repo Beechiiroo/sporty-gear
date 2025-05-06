@@ -124,13 +124,23 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
   // Helper function to get translations
   const t = (key: string, section?: string): string => {
     if (section) {
-      // Type assertion to handle nested properties safely
+      // Get the section object (e.g. 'footer')
       const sectionObj = translations[language][section as keyof TranslationValues];
-      if (sectionObj && typeof sectionObj === 'object' && key in sectionObj) {
-        return (sectionObj as Record<string, string>)[key] || key;
+      
+      // Check if section exists and is an object
+      if (sectionObj && typeof sectionObj === 'object') {
+        // Handle the specific case of the footer section
+        if (section === 'footer') {
+          // Safe access to footer properties
+          return (sectionObj as FooterTranslations)[key as keyof FooterTranslations] || key;
+        }
+        
+        // For other potential objects
+        return key in sectionObj ? (sectionObj as any)[key] : key;
       }
       return key;
     }
+    
     // Direct access to top-level translations
     return (translations[language][key as keyof TranslationValues] as string) || key;
   };
