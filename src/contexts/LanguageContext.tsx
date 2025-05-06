@@ -4,8 +4,46 @@ import React, { createContext, useState, useContext, ReactNode } from 'react';
 // Define available languages
 export type Language = 'fr' | 'en';
 
+// Define translations structure
+interface FooterTranslations {
+  description: string;
+  categories: string;
+  about: string;
+  developer: string;
+  rights: string;
+  privacy: string;
+  terms: string;
+  shipping: string;
+  returns: string;
+}
+
+interface TranslationValues {
+  categories: string;
+  shop: string;
+  search: string;
+  favorites: string;
+  bestRated: string;
+  newItems: string;
+  about: string;
+  ourStory: string;
+  contact: string;
+  blog: string;
+  faq: string;
+  portfolio: string;
+  chat: string;
+  chatPlaceholder: string;
+  send: string;
+  chatbotGreeting: string;
+  footer: FooterTranslations;
+}
+
+// Define the translations object type
+type TranslationsType = {
+  [key in Language]: TranslationValues;
+};
+
 // Define translations
-export const translations = {
+export const translations: TranslationsType = {
   fr: {
     categories: 'Catégories',
     shop: 'Boutique',
@@ -86,9 +124,15 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
   // Helper function to get translations
   const t = (key: string, section?: string): string => {
     if (section) {
-      return translations[language][section as keyof typeof translations[typeof language]][key as keyof typeof translations[typeof language][typeof section]] || key;
+      // Type assertion to handle nested properties safely
+      const sectionObj = translations[language][section as keyof TranslationValues];
+      if (sectionObj && typeof sectionObj === 'object' && key in sectionObj) {
+        return (sectionObj as Record<string, string>)[key] || key;
+      }
+      return key;
     }
-    return translations[language][key as keyof typeof translations[typeof language]] || key;
+    // Direct access to top-level translations
+    return (translations[language][key as keyof TranslationValues] as string) || key;
   };
 
   return (
