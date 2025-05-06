@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, ReactNode } from 'react';
 
 // You need to add the dark mode translation to your existing translations
@@ -36,7 +37,7 @@ interface FooterTranslations {
 interface LanguageContextProps {
   language: string;
   setLanguage: (language: string) => void;
-  t: (key: keyof TranslationValues) => string;
+  t: (key: string) => string;
 }
 
 const LanguageContext = createContext<LanguageContextProps | undefined>(undefined);
@@ -113,8 +114,20 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     localStorage.setItem('language', language);
   }, [language]);
 
-  const t = (key: keyof TranslationValues): string => {
-    return translations[language as keyof typeof translations][key] || key;
+  const t = (key: string): string => {
+    // Handle nested keys like 'footer.description'
+    if (key.includes('.')) {
+      const [section, nestedKey] = key.split('.');
+      const sectionContent = translations[language as keyof typeof translations][section as keyof TranslationValues];
+      
+      if (sectionContent && typeof sectionContent === 'object') {
+        return (sectionContent as any)[nestedKey] || key;
+      }
+      return key;
+    }
+    
+    // Handle regular keys
+    return translations[language as keyof typeof translations][key as keyof TranslationValues] || key;
   };
 
   return (
