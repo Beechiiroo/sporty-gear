@@ -16,9 +16,10 @@ const Chatbot = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([]);
   const [message, setMessage] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
   const scrollAreaRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const { toast } = useToast();
 
   // Add initial message when chat opens
@@ -48,41 +49,107 @@ const Chatbot = () => {
     }
   }, [isOpen]);
 
+  const generateResponse = (userMessage: string): string => {
+    // Basic responses based on keywords in the user's question
+    const userMessageLower = userMessage.toLowerCase();
+    
+    // Define common responses in both languages
+    const responses = {
+      fr: {
+        greeting: "Bonjour ! Comment puis-je vous aider aujourd'hui ?",
+        products: "Nous proposons une large gamme d'équipements sportifs de qualité professionnelle. Vous pouvez parcourir nos catégories sur la page d'accueil.",
+        shipping: "Nous livrons dans le monde entier. Les délais de livraison varient entre 3 et 7 jours ouvrables selon votre emplacement.",
+        returns: "Nous acceptons les retours dans les 30 jours suivant l'achat. Les articles doivent être dans leur état d'origine.",
+        contact: "Vous pouvez nous contacter par email à support@sportify.com ou par téléphone au +33 1 23 45 67 89.",
+        hours: "Notre service client est disponible du lundi au vendredi de 9h à 18h.",
+        price: "Nos prix varient selon les produits. Nous proposons des options pour tous les budgets avec un excellent rapport qualité-prix.",
+        discount: "Inscrivez-vous à notre newsletter pour recevoir un code de réduction de 10% sur votre première commande.",
+        payment: "Nous acceptons les cartes de crédit, PayPal et les virements bancaires.",
+        default: "Merci pour votre question. Notre équipe va vous répondre sous peu. N'hésitez pas à poser une autre question."
+      },
+      en: {
+        greeting: "Hello! How can I help you today?",
+        products: "We offer a wide range of professional quality sports equipment. You can browse our categories on the homepage.",
+        shipping: "We ship worldwide. Delivery times range from 3 to 7 business days depending on your location.",
+        returns: "We accept returns within 30 days of purchase. Items must be in their original condition.",
+        contact: "You can contact us by email at support@sportify.com or by phone at +1 234 567 8900.",
+        hours: "Our customer service is available Monday to Friday from 9am to 6pm.",
+        price: "Our prices vary depending on the products. We offer options for all budgets with excellent value for money.",
+        discount: "Sign up for our newsletter to receive a 10% discount code on your first order.",
+        payment: "We accept credit cards, PayPal, and bank transfers.",
+        default: "Thank you for your question. Our team will get back to you shortly. Feel free to ask another question."
+      }
+    };
+
+    const currentResponses = language === 'fr' ? responses.fr : responses.en;
+    
+    // Check for keywords and return appropriate responses
+    if (userMessageLower.includes('bonjour') || userMessageLower.includes('salut') || 
+        userMessageLower.includes('hello') || userMessageLower.includes('hi')) {
+      return currentResponses.greeting;
+    } else if (userMessageLower.includes('produit') || userMessageLower.includes('product') || 
+               userMessageLower.includes('article') || userMessageLower.includes('item')) {
+      return currentResponses.products;
+    } else if (userMessageLower.includes('livraison') || userMessageLower.includes('shipping') || 
+               userMessageLower.includes('délai') || userMessageLower.includes('delivery')) {
+      return currentResponses.shipping;
+    } else if (userMessageLower.includes('retour') || userMessageLower.includes('return') || 
+               userMessageLower.includes('rembourse') || userMessageLower.includes('refund')) {
+      return currentResponses.returns;
+    } else if (userMessageLower.includes('contact') || userMessageLower.includes('téléphone') || 
+               userMessageLower.includes('email') || userMessageLower.includes('phone')) {
+      return currentResponses.contact;
+    } else if (userMessageLower.includes('horaire') || userMessageLower.includes('hour') || 
+               userMessageLower.includes('ouverture') || userMessageLower.includes('open')) {
+      return currentResponses.hours;
+    } else if (userMessageLower.includes('prix') || userMessageLower.includes('price') || 
+               userMessageLower.includes('coût') || userMessageLower.includes('cost')) {
+      return currentResponses.price;
+    } else if (userMessageLower.includes('réduction') || userMessageLower.includes('discount') || 
+               userMessageLower.includes('promo') || userMessageLower.includes('coupon')) {
+      return currentResponses.discount;
+    } else if (userMessageLower.includes('paiement') || userMessageLower.includes('payment') || 
+               userMessageLower.includes('carte') || userMessageLower.includes('card')) {
+      return currentResponses.payment;
+    } else {
+      return currentResponses.default;
+    }
+  };
+
   const handleSendMessage = () => {
     if (!message.trim()) return;
 
+    const userMessage = message.trim();
+
+    // Add user message
     setMessages((prev) => [
       ...prev,
       {
-        text: message,
+        text: userMessage,
         isUser: true,
       },
     ]);
 
     setMessage('');
+    setIsTyping(true);
 
-    // Simulate response after a short delay
+    // Simulate bot typing and response after a short delay
     setTimeout(() => {
-      const responses = [
-        "Merci pour votre question ! Notre équipe vous répondra sous peu.",
-        "Je vais transmettre votre demande à notre service client.",
-        "Nous avons bien reçu votre message et allons vous répondre rapidement.",
-        "Votre question est importante pour nous. Nous la traitons actuellement.",
-      ];
-
-      const randomResponse = responses[Math.floor(Math.random() * responses.length)];
-
+      const botResponse = generateResponse(userMessage);
+      
       setMessages((prev) => [
         ...prev,
         {
-          text: randomResponse,
+          text: botResponse,
           isUser: false,
         },
       ]);
-
+      
+      setIsTyping(false);
+      
       toast({
-        title: "Message reçu",
-        description: "Nous avons bien reçu votre message.",
+        title: language === 'fr' ? "Message reçu" : "Message received",
+        description: language === 'fr' ? "Nous avons répondu à votre message." : "We've responded to your message.",
       });
     }, 1000);
   };
@@ -132,13 +199,24 @@ const Chatbot = () => {
                     className={`max-w-[80%] p-3 rounded-lg ${
                       msg.isUser
                         ? 'bg-blue-600 text-white rounded-tr-none'
-                        : 'bg-gray-100 dark:bg-gray-700 rounded-tl-none'
+                        : 'bg-gray-100 dark:bg-gray-700 rounded-tl-none dark:text-white'
                     }`}
                   >
                     {msg.text}
                   </div>
                 </div>
               ))}
+              {isTyping && (
+                <div className="flex justify-start">
+                  <div className="max-w-[80%] p-3 rounded-lg bg-gray-100 dark:bg-gray-700 rounded-tl-none dark:text-white">
+                    <span className="flex gap-1">
+                      <span className="animate-bounce">.</span>
+                      <span className="animate-bounce animation-delay-200">.</span>
+                      <span className="animate-bounce animation-delay-400">.</span>
+                    </span>
+                  </div>
+                </div>
+              )}
             </div>
           </ScrollArea>
 
@@ -151,8 +229,9 @@ const Chatbot = () => {
               onKeyPress={handleKeyPress}
               placeholder={t('chatPlaceholder')}
               className="flex-grow mr-2"
+              disabled={isTyping}
             />
-            <Button onClick={handleSendMessage} size="icon">
+            <Button onClick={handleSendMessage} size="icon" disabled={isTyping}>
               <Send className="h-4 w-4" />
             </Button>
           </div>
