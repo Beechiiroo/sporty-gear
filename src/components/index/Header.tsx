@@ -6,6 +6,7 @@ import { Filter, Heart, Search, Store, Star, ShoppingBag, Trophy } from "lucide-
 import { Badge } from "@/components/ui/badge";
 import { useFavorites } from "@/stores/FavoritesStore";
 import LanguageSwitcher from "@/components/LanguageSwitcher";
+import DarkModeToggle from "@/components/DarkModeToggle";
 import { useLanguage } from "@/contexts/LanguageContext";
 import {
   NavigationMenu,
@@ -44,7 +45,7 @@ const Header = ({
   const { t } = useLanguage();
 
   return (
-    <header className="sticky top-0 z-50 backdrop-blur-lg bg-white/80 border-b border-gray-200">
+    <header className="sticky top-0 z-50 backdrop-blur-lg bg-white/80 dark:bg-gray-900/80 border-b border-gray-200 dark:border-gray-700">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <div className="flex items-center gap-2">
           <Trophy className="h-8 w-8 text-blue-600 animate-bounce" />
@@ -57,14 +58,14 @@ const Header = ({
           <NavigationMenu>
             <NavigationMenuList>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>{t('categories')}</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">{t('categories')}</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px]">
+                  <ul className="grid w-[400px] gap-3 p-4 md:w-[500px] md:grid-cols-2 lg:w-[600px] dark:bg-gray-800">
                     {categories.map((category) => (
                       <li key={category} className="row-span-3">
                         <Button
                           variant="ghost"
-                          className="w-full justify-start text-left font-normal"
+                          className="w-full justify-start text-left font-normal dark:text-white dark:hover:bg-gray-700"
                           onClick={() => setSelectedCategory(category)}
                         >
                           {category}
@@ -75,9 +76,9 @@ const Header = ({
                 </NavigationMenuContent>
               </NavigationMenuItem>
               <NavigationMenuItem>
-                <NavigationMenuTrigger>{t('shop')}</NavigationMenuTrigger>
+                <NavigationMenuTrigger className="dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">{t('shop')}</NavigationMenuTrigger>
                 <NavigationMenuContent>
-                  <div className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr]">
+                  <div className="grid gap-3 p-4 md:w-[400px] lg:w-[500px] lg:grid-cols-[.75fr_1fr] dark:bg-gray-800">
                     <div className="rounded-md bg-gradient-to-b from-blue-600 to-purple-600 p-4 text-white">
                       <Store className="h-8 w-8 mb-2" />
                       <div className="mb-2 mt-4 text-lg font-medium">
@@ -90,7 +91,7 @@ const Header = ({
                     <div className="p-4">
                       <Button 
                         variant="outline" 
-                        className="w-full justify-start text-left mb-2"
+                        className="w-full justify-start text-left mb-2 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-600"
                         onClick={() => setShowFavoritesOnly(true)}
                       >
                         <Heart className="mr-2 h-4 w-4" />
@@ -98,7 +99,7 @@ const Header = ({
                       </Button>
                       <Button 
                         variant="outline" 
-                        className="w-full justify-start text-left mb-2"
+                        className="w-full justify-start text-left mb-2 dark:text-white dark:bg-gray-700 dark:hover:bg-gray-600"
                         onClick={() => setSortOption("rating")}
                       >
                         <Star className="mr-2 h-4 w-4" />
@@ -106,7 +107,7 @@ const Header = ({
                       </Button>
                       <Button 
                         variant="outline" 
-                        className="w-full justify-start text-left"
+                        className="w-full justify-start text-left dark:text-white dark:bg-gray-700 dark:hover:bg-gray-600"
                         onClick={() => setSortOption("newest")}
                       >
                         <ShoppingBag className="mr-2 h-4 w-4" />
@@ -120,24 +121,25 @@ const Header = ({
           </NavigationMenu>
         </div>
 
-        <div className="hidden md:flex items-center border rounded-full px-4 py-2 bg-white flex-grow mx-4 max-w-md">
-          <Search className="h-4 w-4 text-gray-500 mr-2" />
+        <div className="hidden md:flex items-center border rounded-full px-4 py-2 bg-white dark:bg-gray-800 dark:border-gray-600 flex-grow mx-4 max-w-md">
+          <Search className="h-4 w-4 text-gray-500 dark:text-gray-400 mr-2" />
           <Input 
             type="text" 
             placeholder={t('search')}
-            className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 px-0"
+            className="border-0 focus-visible:ring-0 focus-visible:ring-offset-0 px-0 dark:bg-gray-800 dark:text-white"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
         
         <div className="flex items-center gap-2">
+          <DarkModeToggle />
           <LanguageSwitcher />
           
           <Button 
             variant="outline" 
             size="icon"
-            className="relative"
+            className="relative dark:bg-gray-800 dark:border-gray-600 dark:text-white"
             onClick={() => setShowFavoritesOnly(!showFavoritesOnly)}
           >
             <Heart className={`h-5 w-5 ${showFavoritesOnly ? 'fill-red-500 text-red-500' : ''}`} />
@@ -151,7 +153,7 @@ const Header = ({
           <Button
             variant="outline"
             size="icon"
-            className={`md:hidden relative ${activeFilterCount > 0 ? 'border-blue-500' : ''}`}
+            className={`md:hidden relative ${activeFilterCount > 0 ? 'border-blue-500' : ''} dark:bg-gray-800 dark:border-gray-600 dark:text-white`}
             onClick={() => setIsFilterDialogOpen(true)}
           >
             <Filter className={`h-5 w-5 ${activeFilterCount > 0 ? 'text-blue-500' : ''}`} />

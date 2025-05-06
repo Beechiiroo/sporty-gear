@@ -1,22 +1,6 @@
+import React, { createContext, useContext, useState, ReactNode } from 'react';
 
-import React, { createContext, useState, useContext, ReactNode } from 'react';
-
-// Define available languages
-export type Language = 'fr' | 'en';
-
-// Define translations structure
-interface FooterTranslations {
-  description: string;
-  categories: string;
-  about: string;
-  developer: string;
-  rights: string;
-  privacy: string;
-  terms: string;
-  shipping: string;
-  returns: string;
-}
-
+// You need to add the dark mode translation to your existing translations
 interface TranslationValues {
   categories: string;
   shop: string;
@@ -32,117 +16,105 @@ interface TranslationValues {
   portfolio: string;
   chat: string;
   chatPlaceholder: string;
-  send: string;
   chatbotGreeting: string;
+  toggleDarkMode: string;
   footer: FooterTranslations;
 }
 
-// Define the translations object type
-type TranslationsType = {
-  [key in Language]: TranslationValues;
-};
-
-// Define translations
-export const translations: TranslationsType = {
-  fr: {
-    categories: 'Catégories',
-    shop: 'Boutique',
-    search: 'Rechercher des produits...',
-    favorites: 'Mes favoris',
-    bestRated: 'Meilleures notes',
-    newItems: 'Nouveautés',
-    about: 'À Propos',
-    ourStory: 'Notre Histoire',
-    contact: 'Contact',
-    blog: 'Blog',
-    faq: 'FAQ',
-    portfolio: 'Portfolio',
-    chat: 'Discuter',
-    chatPlaceholder: 'Posez-nous une question...',
-    send: 'Envoyer',
-    chatbotGreeting: 'Bonjour! Comment puis-je vous aider aujourd\'hui?',
-    footer: {
-      description: 'Votre boutique en ligne pour tout équipement sportif de qualité professionnelle.',
-      categories: 'Catégories',
-      about: 'À Propos',
-      developer: 'Développeur',
-      rights: 'Tous droits réservés.',
-      privacy: 'Politique de confidentialité',
-      terms: 'Conditions d\'utilisation',
-      shipping: 'Livraisons',
-      returns: 'Retours'
-    }
-  },
-  en: {
-    categories: 'Categories',
-    shop: 'Shop',
-    search: 'Search for products...',
-    favorites: 'My favorites',
-    bestRated: 'Best rated',
-    newItems: 'New arrivals',
-    about: 'About',
-    ourStory: 'Our Story',
-    contact: 'Contact',
-    blog: 'Blog',
-    faq: 'FAQ',
-    portfolio: 'Portfolio',
-    chat: 'Chat',
-    chatPlaceholder: 'Ask us a question...',
-    send: 'Send',
-    chatbotGreeting: 'Hello! How can I help you today?',
-    footer: {
-      description: 'Your online store for all professional quality sports equipment.',
-      categories: 'Categories',
-      about: 'About',
-      developer: 'Developer',
-      rights: 'All rights reserved.',
-      privacy: 'Privacy Policy',
-      terms: 'Terms of Use',
-      shipping: 'Shipping',
-      returns: 'Returns'
-    }
-  }
-};
-
-// Create the context
-interface LanguageContextType {
-  language: Language;
-  setLanguage: (lang: Language) => void;
-  t: (key: string, section?: string) => string;
+interface FooterTranslations {
+  description: string;
+  categories: string;
+  about: string;
+  developer: string;
+  rights: string;
+  privacy: string;
+  terms: string;
+  shipping: string;
+  returns: string;
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+interface LanguageContextProps {
+  language: string;
+  setLanguage: (language: string) => void;
+  t: (key: keyof TranslationValues) => string;
+}
 
-// Create a provider component
+const LanguageContext = createContext<LanguageContextProps | undefined>(undefined);
+
 interface LanguageProviderProps {
   children: ReactNode;
 }
 
-export const LanguageProvider = ({ children }: LanguageProviderProps) => {
-  const [language, setLanguage] = useState<Language>('fr');
-
-  // Helper function to get translations
-  const t = (key: string, section?: string): string => {
-    if (section) {
-      // Get the section object (e.g. 'footer')
-      const sectionObj = translations[language][section as keyof TranslationValues];
-      
-      // Check if section exists and is an object
-      if (sectionObj && typeof sectionObj === 'object') {
-        // Handle the specific case of the footer section
-        if (section === 'footer') {
-          // Safe access to footer properties
-          return (sectionObj as FooterTranslations)[key as keyof FooterTranslations] || key;
-        }
-        
-        // For other potential objects
-        return key in sectionObj ? (sectionObj as any)[key] : key;
-      }
-      return key;
+const translations = {
+  en: {
+    categories: "Categories",
+    shop: "Shop",
+    search: "Search for products...",
+    favorites: "Favorites",
+    bestRated: "Best Rated",
+    newItems: "New Items",
+    about: "About",
+    ourStory: "Our Story",
+    contact: "Contact",
+    blog: "Blog",
+    faq: "FAQ",
+    portfolio: "Portfolio",
+    chat: "Chat with us",
+    chatPlaceholder: "Type your message...",
+    chatbotGreeting: "Hello! How can I help you today?",
+    toggleDarkMode: "Toggle Dark Mode",
+    footer: {
+      description: "Professional sports equipment with the best quality and price guarantee.",
+      categories: "Categories",
+      about: "About Us",
+      developer: "Developed by SportyGear Team",
+      rights: "© 2025 SportyGear. All rights reserved.",
+      privacy: "Privacy Policy",
+      terms: "Terms of Service",
+      shipping: "Shipping Policy",
+      returns: "Returns Policy"
     }
-    
-    // Direct access to top-level translations
-    return (translations[language][key as keyof TranslationValues] as string) || key;
+  },
+  fr: {
+    categories: "Catégories",
+    shop: "Boutique",
+    search: "Rechercher des produits...",
+    favorites: "Favoris",
+    bestRated: "Les Mieux Notés",
+    newItems: "Nouveautés",
+    about: "À Propos",
+    ourStory: "Notre Histoire",
+    contact: "Contact",
+    blog: "Blog",
+    faq: "FAQ",
+    portfolio: "Portfolio",
+    chat: "Discuter avec nous",
+    chatPlaceholder: "Tapez votre message...",
+    chatbotGreeting: "Bonjour ! Comment puis-je vous aider aujourd'hui ?",
+    toggleDarkMode: "Mode Sombre",
+    footer: {
+      description: "Équipement sportif professionnel avec la meilleure qualité et garantie de prix.",
+      categories: "Catégories",
+      about: "À Propos de Nous",
+      developer: "Développé par l'équipe SportyGear",
+      rights: "© 2025 SportyGear. Tous droits réservés.",
+      privacy: "Politique de Confidentialité",
+      terms: "Conditions d'Utilisation",
+      shipping: "Politique d'Expédition",
+      returns: "Politique de Retours"
+    }
+  }
+};
+
+export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
+  const [language, setLanguage] = useState(localStorage.getItem('language') || 'en');
+
+  React.useEffect(() => {
+    localStorage.setItem('language', language);
+  }, [language]);
+
+  const t = (key: keyof TranslationValues): string => {
+    return translations[language as keyof typeof translations][key] || key;
   };
 
   return (
@@ -152,11 +124,10 @@ export const LanguageProvider = ({ children }: LanguageProviderProps) => {
   );
 };
 
-// Create a custom hook to use the language context
-export const useLanguage = () => {
+export const useLanguage = (): LanguageContextProps => {
   const context = useContext(LanguageContext);
-  if (context === undefined) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
+  if (!context) {
+    throw new Error("useLanguage must be used within a LanguageProvider");
   }
   return context;
 };
