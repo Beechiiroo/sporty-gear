@@ -121,13 +121,15 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
       const sectionContent = translations[language as keyof typeof translations][section as keyof TranslationValues];
       
       if (sectionContent && typeof sectionContent === 'object') {
-        return (sectionContent as any)[nestedKey] || key;
+        // Cast the result to string to ensure type compatibility
+        return (sectionContent as Record<string, string>)[nestedKey] || key;
       }
       return key;
     }
     
     // Handle regular keys
-    return translations[language as keyof typeof translations][key as keyof TranslationValues] || key;
+    const translation = translations[language as keyof typeof translations][key as keyof TranslationValues];
+    return typeof translation === 'string' ? translation : key;
   };
 
   return (
