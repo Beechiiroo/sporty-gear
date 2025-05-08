@@ -1,5 +1,5 @@
 
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext, useState, ReactNode, useEffect } from 'react';
 
 // You need to add the dark mode translation to your existing translations
 interface TranslationValues {
@@ -108,9 +108,12 @@ const translations = {
 };
 
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
-  const [language, setLanguage] = useState(localStorage.getItem('language') || 'en');
+  const [language, setLanguage] = useState<string>(() => {
+    const savedLanguage = localStorage.getItem('language');
+    return savedLanguage || 'en';
+  });
 
-  React.useEffect(() => {
+  useEffect(() => {
     localStorage.setItem('language', language);
   }, [language]);
 
@@ -118,17 +121,20 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
     // Handle nested keys like 'footer.description'
     if (key.includes('.')) {
       const [section, nestedKey] = key.split('.');
-      const sectionContent = translations[language as keyof typeof translations][section as keyof TranslationValues];
+      const translationObj = translations[language as keyof typeof translations];
+      const sectionContent = translationObj[section as keyof TranslationValues];
       
       if (sectionContent && typeof sectionContent === 'object') {
-        // Cast the result to string to ensure type compatibility
-        return (sectionContent as Record<string, string>)[nestedKey] || key;
+        // Cast the result to string and ensure we have a valid string return
+        const nestedValue = (sectionContent as Record<string, string>)[nestedKey];
+        return typeof nestedValue === 'string' ? nestedValue : key;
       }
       return key;
     }
     
     // Handle regular keys
-    const translation = translations[language as keyof typeof translations][key as keyof TranslationValues];
+    const translationObj = translations[language as keyof typeof translations];
+    const translation = translationObj[key as keyof TranslationValues];
     return typeof translation === 'string' ? translation : key;
   };
 
