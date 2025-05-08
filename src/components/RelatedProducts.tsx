@@ -10,7 +10,7 @@ interface RelatedProductsProps {
 }
 
 const RelatedProducts = ({ currentProductId, category }: RelatedProductsProps) => {
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const relatedProducts = products
     .filter(product => product.category === category && product.id !== currentProductId)
     .slice(0, 4);
@@ -18,7 +18,7 @@ const RelatedProducts = ({ currentProductId, category }: RelatedProductsProps) =
   return (
     <div className="space-y-6">
       <h2 className="text-2xl font-bold">
-        {language === 'fr' ? "Produits Similaires" : "Related Products"}
+        {t('relatedProducts')}
       </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {relatedProducts.map((product) => (

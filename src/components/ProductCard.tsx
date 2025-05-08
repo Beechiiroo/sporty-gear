@@ -32,7 +32,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
   const addToCart = useCart(state => state.addItem);
   const { toast } = useToast();
   const { toggleFavorite, isFavorite } = useFavorites();
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   const isLiked = isFavorite(id);
   const { playAddToCartSound, playFavoriteSound } = useSound();
 
@@ -42,10 +42,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
     addToCart({ id, name: localizedName, price, image, quantity: 1 });
     playAddToCartSound();
     toast({
-      title: language === 'fr' ? "Ajouté au panier" : "Added to cart",
-      description: language === 'fr' 
-        ? `${localizedName} a été ajouté à votre panier` 
-        : `${localizedName} has been added to your cart`,
+      title: t('addedToCart'),
+      description: `${localizedName} ${t('hasBeenAddedToCart')}`,
     });
   };
 
@@ -73,7 +71,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
       {featured && (
         <div className="absolute top-2 right-2 z-10">
           <span className="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-1 text-xs font-medium text-yellow-800">
-            {language === 'fr' ? "Produit Vedette" : "Featured Product"}
+            {t('featuredProduct')}
           </span>
         </div>
       )}
@@ -101,10 +99,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>{isLiked 
-                  ? (language === 'fr' ? "Retirer des favoris" : "Remove from favorites") 
-                  : (language === 'fr' ? "Ajouter aux favoris" : "Add to favorites")}
-                </p>
+                <p>{isLiked ? t('removeFromFavorites') : t('addToFavorites')}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -144,7 +139,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>{language === 'fr' ? "Ajouter au panier" : "Add to cart"}</p>
+                  <p>{t('addToCart')}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>

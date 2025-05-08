@@ -34,7 +34,7 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const addToCart = useCart(state => state.addItem);
   const { toggleFavorite, isFavorite } = useFavorites();
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
 
   const product = products.find(p => p.id === Number(id));
 
@@ -42,11 +42,11 @@ const ProductDetails = () => {
     return (
       <div className="container mx-auto px-4 py-8">
         <h1 className="text-2xl font-bold mb-4">
-          {language === 'fr' ? "Produit non trouvé" : "Product not found"}
+          {t('productNotFound')}
         </h1>
         <Button onClick={() => navigate('/')} variant="outline">
           <ArrowLeft className="mr-2 h-4 w-4" />
-          {language === 'fr' ? "Retour à l'accueil" : "Return to Home"}
+          {t('returnHome')}
         </Button>
       </div>
     );
@@ -68,7 +68,7 @@ const ProductDetails = () => {
     <div className="container mx-auto px-4 py-8 space-y-12">
       <Button onClick={() => navigate('/')} variant="outline" className="mb-6">
         <ArrowLeft className="mr-2 h-4 w-4" />
-        {language === 'fr' ? "Retour à l'accueil" : "Return to Home"}
+        {t('returnHome')}
       </Button>
 
       <div className="grid md:grid-cols-2 gap-8">
@@ -106,7 +106,7 @@ const ProductDetails = () => {
           </p>
 
           <div className="space-y-4">
-            <h3 className="font-semibold">{language === 'fr' ? "Description" : "Description"}</h3>
+            <h3 className="font-semibold">{t('description')}</h3>
             <p className="text-gray-600">
               {language === 'fr' 
                 ? `Ce ${localizedName.toLowerCase()} premium est conçu pour une performance et une durabilité optimales. Parfait pour les athlètes professionnels et les passionnés.` 
@@ -117,7 +117,7 @@ const ProductDetails = () => {
           <div className="flex gap-4">
             <Button onClick={handleAddToCart} className="flex-1">
               <ShoppingCart className="mr-2 h-4 w-4" />
-              {language === 'fr' ? "Ajouter au panier" : "Add to Cart"}
+              {t('addToCart')}
             </Button>
           </div>
         </div>

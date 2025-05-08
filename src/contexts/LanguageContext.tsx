@@ -20,6 +20,21 @@ interface TranslationValues {
   chatbotGreeting: string;
   toggleDarkMode: string;
   footer: FooterTranslations;
+  relatedProducts: string;
+  productNotFound: string;
+  returnHome: string;
+  description: string;
+  addToCart: string;
+  noProductsFound: string;
+  adjustFilters: string;
+  resetFilters: string;
+  addedToCart: string;
+  hasBeenAddedToCart: string;
+  featuredProduct: string;
+  removeFromFavorites: string;
+  addToFavorites: string;
+  languageChanged: string;
+  selected: string;
 }
 
 interface FooterTranslations {
@@ -64,6 +79,21 @@ const translations = {
     chatPlaceholder: "Type your message...",
     chatbotGreeting: "Hello! How can I help you today?",
     toggleDarkMode: "Toggle Dark Mode",
+    relatedProducts: "Related Products",
+    productNotFound: "Product not found",
+    returnHome: "Return to Home",
+    description: "Description",
+    addToCart: "Add to Cart",
+    noProductsFound: "No products found",
+    adjustFilters: "Try adjusting your filters or search query.",
+    resetFilters: "Reset filters",
+    addedToCart: "Added to cart",
+    hasBeenAddedToCart: "has been added to your cart",
+    featuredProduct: "Featured Product",
+    removeFromFavorites: "Remove from favorites",
+    addToFavorites: "Add to favorites",
+    languageChanged: "Language changed",
+    selected: "selected",
     footer: {
       description: "Professional sports equipment with the best quality and price guarantee.",
       categories: "Categories",
@@ -93,6 +123,21 @@ const translations = {
     chatPlaceholder: "Tapez votre message...",
     chatbotGreeting: "Bonjour ! Comment puis-je vous aider aujourd'hui ?",
     toggleDarkMode: "Mode Sombre",
+    relatedProducts: "Produits Similaires",
+    productNotFound: "Produit non trouvé",
+    returnHome: "Retour à l'accueil",
+    description: "Description",
+    addToCart: "Ajouter au panier",
+    noProductsFound: "Aucun produit trouvé",
+    adjustFilters: "Essayez d'ajuster vos filtres ou votre recherche.",
+    resetFilters: "Réinitialiser les filtres",
+    addedToCart: "Ajouté au panier",
+    hasBeenAddedToCart: "a été ajouté à votre panier",
+    featuredProduct: "Produit Vedette",
+    removeFromFavorites: "Retirer des favoris",
+    addToFavorites: "Ajouter aux favoris",
+    languageChanged: "Langue changée",
+    selected: "sélectionné",
     footer: {
       description: "Équipement sportif professionnel avec la meilleure qualité et garantie de prix.",
       categories: "Catégories",

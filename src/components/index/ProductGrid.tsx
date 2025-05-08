@@ -28,7 +28,7 @@ const ProductGrid = ({
   resetFilters,
 }: ProductGridProps) => {
   const { isFavorite } = useFavorites();
-  const { language } = useLanguage();
+  const { language, t } = useLanguage();
   
   // Filter products based on all criteria
   const filteredProducts = useMemo(() => {
@@ -79,19 +79,17 @@ const ProductGrid = ({
           <Search className="h-8 w-8 text-gray-400" />
         </div>
         <h3 className="text-lg font-medium">
-          {language === 'fr' ? "Aucun produit trouvé" : "No products found"}
+          {t('noProductsFound')}
         </h3>
         <p className="text-gray-500">
-          {language === 'fr' 
-            ? "Essayez d'ajuster vos filtres ou votre recherche." 
-            : "Try adjusting your filters or search query."}
+          {t('adjustFilters')}
         </p>
         <Button 
           variant="outline"
           className="mt-4"
           onClick={resetFilters}
         >
-          {language === 'fr' ? "Réinitialiser les filtres" : "Reset filters"}
+          {t('resetFilters')}
         </Button>
       </div>
     );

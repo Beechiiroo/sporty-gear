@@ -3,10 +3,10 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { useToast } from '@/hooks/use-toast';
-import { Languages } from 'lucide-react';
+import { Globe } from 'lucide-react';
 
 const LanguageSwitcher = () => {
-  const { language, setLanguage } = useLanguage();
+  const { language, setLanguage, t } = useLanguage();
   const { toast } = useToast();
 
   const toggleLanguage = () => {
@@ -14,8 +14,8 @@ const LanguageSwitcher = () => {
     setLanguage(newLang);
     
     toast({
-      title: newLang === 'fr' ? 'Langue changée' : 'Language changed',
-      description: newLang === 'fr' ? 'Français sélectionné' : 'English selected',
+      title: t('languageChanged'),
+      description: `${newLang === 'fr' ? 'Français' : 'English'} ${t('selected')}`,
       duration: 3000,
     });
 
@@ -34,7 +34,7 @@ const LanguageSwitcher = () => {
       className="px-2 hover:bg-gray-100 dark:hover:bg-gray-800 border-gray-300 flex items-center gap-1"
       title={language === 'fr' ? 'Switch to English' : 'Passer au Français'}
     >
-      <Languages className="h-4 w-4" />
+      <Globe className="h-4 w-4" />
       {language === 'fr' ? 'EN' : 'FR'}
     </Button>
   );
