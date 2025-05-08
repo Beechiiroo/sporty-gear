@@ -35,6 +35,10 @@ interface TranslationValues {
   addToFavorites: string;
   languageChanged: string;
   selected: string;
+  heroTitle: string;
+  heroDescription: string;
+  shopNow: string;
+  discoverOurStory: string;
 }
 
 interface FooterTranslations {
@@ -94,6 +98,10 @@ const translations = {
     addToFavorites: "Add to favorites",
     languageChanged: "Language changed",
     selected: "selected",
+    heroTitle: "Elevate Your Game",
+    heroDescription: "Premium sports equipment for champions. Discover our professional quality gear with exceptional discounts.",
+    shopNow: "Shop Now",
+    discoverOurStory: "Discover Our Story",
     footer: {
       description: "Professional sports equipment with the best quality and price guarantee.",
       categories: "Categories",
@@ -138,6 +146,10 @@ const translations = {
     addToFavorites: "Ajouter aux favoris",
     languageChanged: "Langue changée",
     selected: "sélectionné",
+    heroTitle: "Élevez Votre Jeu",
+    heroDescription: "Équipement sportif premium pour les champions. Découvrez notre matériel de qualité professionnelle avec des remises exceptionnelles.",
+    shopNow: "Acheter Maintenant",
+    discoverOurStory: "Découvrir Notre Histoire",
     footer: {
       description: "Équipement sportif professionnel avec la meilleure qualité et garantie de prix.",
       categories: "Catégories",
