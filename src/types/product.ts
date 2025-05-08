@@ -10,7 +10,10 @@ export interface Review {
 
 export interface ProductDetails {
   id: number;
-  name: string;
+  name: {
+    en: string;
+    fr: string;
+  };
   price: number;
   image: string;
   category: string;
@@ -19,4 +22,16 @@ export interface ProductDetails {
   features: string[];
   specifications: Record<string, string>;
   reviews: Review[];
+}
+
+export interface Product {
+  id: number;
+  name: {
+    en: string;
+    fr: string;
+  };
+  price: number;
+  image: string;
+  category: string;
+  rating: number;
 }

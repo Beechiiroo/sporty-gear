@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { products } from '@/data/products';
+import { useLanguage } from '@/contexts/LanguageContext';
 import ProductCard from './ProductCard';
 
 interface RelatedProductsProps {
@@ -9,13 +10,16 @@ interface RelatedProductsProps {
 }
 
 const RelatedProducts = ({ currentProductId, category }: RelatedProductsProps) => {
+  const { language } = useLanguage();
   const relatedProducts = products
     .filter(product => product.category === category && product.id !== currentProductId)
     .slice(0, 4);
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold">Related Products</h2>
+      <h2 className="text-2xl font-bold">
+        {language === 'fr' ? "Produits Similaires" : "Related Products"}
+      </h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {relatedProducts.map((product) => (
           <ProductCard key={product.id} {...product} />

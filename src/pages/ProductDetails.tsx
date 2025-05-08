@@ -4,6 +4,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { products } from '@/data/products';
 import { Button } from '@/components/ui/button';
 import { ArrowLeft, ShoppingCart, Star } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 import RelatedProducts from '@/components/RelatedProducts';
 import ProductReviews from '@/components/ProductReviews';
 import { useCart } from '@/stores/CartStore';
@@ -33,25 +34,30 @@ const ProductDetails = () => {
   const navigate = useNavigate();
   const addToCart = useCart(state => state.addItem);
   const { toggleFavorite, isFavorite } = useFavorites();
+  const { language } = useLanguage();
 
   const product = products.find(p => p.id === Number(id));
 
   if (!product) {
     return (
       <div className="container mx-auto px-4 py-8">
-        <h1 className="text-2xl font-bold mb-4">Product not found</h1>
+        <h1 className="text-2xl font-bold mb-4">
+          {language === 'fr' ? "Produit non trouvé" : "Product not found"}
+        </h1>
         <Button onClick={() => navigate('/')} variant="outline">
           <ArrowLeft className="mr-2 h-4 w-4" />
-          Return to Home
+          {language === 'fr' ? "Retour à l'accueil" : "Return to Home"}
         </Button>
       </div>
     );
   }
 
+  const localizedName = product.name[language as keyof typeof product.name] || product.name.en;
+
   const handleAddToCart = () => {
     addToCart({
       id: product.id,
-      name: product.name,
+      name: localizedName,
       price: product.price,
       image: product.image,
       quantity: 1
@@ -62,14 +68,14 @@ const ProductDetails = () => {
     <div className="container mx-auto px-4 py-8 space-y-12">
       <Button onClick={() => navigate('/')} variant="outline" className="mb-6">
         <ArrowLeft className="mr-2 h-4 w-4" />
-        Return to Home
+        {language === 'fr' ? "Retour à l'accueil" : "Return to Home"}
       </Button>
 
       <div className="grid md:grid-cols-2 gap-8">
         <div className="relative aspect-square">
           <img
             src={product.image}
-            alt={product.name}
+            alt={localizedName}
             className="w-full h-full object-cover rounded-lg"
           />
         </div>
@@ -77,7 +83,7 @@ const ProductDetails = () => {
         <div className="space-y-6">
           <div>
             <p className="text-sm font-medium text-blue-600">{product.category}</p>
-            <h1 className="text-3xl font-bold mt-2">{product.name}</h1>
+            <h1 className="text-3xl font-bold mt-2">{localizedName}</h1>
           </div>
 
           <div className="flex items-center gap-1">
@@ -93,24 +99,25 @@ const ProductDetails = () => {
           </div>
 
           <p className="text-3xl font-bold text-blue-600">
-            {new Intl.NumberFormat('fr-FR', {
+            {new Intl.NumberFormat(language === 'fr' ? 'fr-FR' : 'en-US', {
               style: 'currency',
-              currency: 'EUR'
+              currency: language === 'fr' ? 'EUR' : 'USD'
             }).format(product.price)}
           </p>
 
           <div className="space-y-4">
-            <h3 className="font-semibold">Description</h3>
+            <h3 className="font-semibold">{language === 'fr' ? "Description" : "Description"}</h3>
             <p className="text-gray-600">
-              This premium {product.name.toLowerCase()} is designed for optimal performance
-              and durability. Perfect for both professional athletes and enthusiasts.
+              {language === 'fr' 
+                ? `Ce ${localizedName.toLowerCase()} premium est conçu pour une performance et une durabilité optimales. Parfait pour les athlètes professionnels et les passionnés.` 
+                : `This premium ${localizedName.toLowerCase()} is designed for optimal performance and durability. Perfect for both professional athletes and enthusiasts.`}
             </p>
           </div>
 
           <div className="flex gap-4">
             <Button onClick={handleAddToCart} className="flex-1">
               <ShoppingCart className="mr-2 h-4 w-4" />
-              Add to Cart
+              {language === 'fr' ? "Ajouter au panier" : "Add to Cart"}
             </Button>
           </div>
         </div>

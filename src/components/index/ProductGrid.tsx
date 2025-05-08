@@ -3,6 +3,7 @@ import { products } from "@/data/products";
 import ProductCard from "@/components/ProductCard";
 import { useMemo } from "react";
 import { useFavorites } from "@/stores/FavoritesStore";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { SortOption } from "@/components/SortOptions";
@@ -27,6 +28,7 @@ const ProductGrid = ({
   resetFilters,
 }: ProductGridProps) => {
   const { isFavorite } = useFavorites();
+  const { language } = useLanguage();
   
   // Filter products based on all criteria
   const filteredProducts = useMemo(() => {
@@ -45,9 +47,10 @@ const ProductGrid = ({
       // Favorites filter
       const passesFavorites = showFavoritesOnly ? isFavorite(product.id) : true;
       
-      // Search filter
+      // Search filter - now using localized name
+      const localizedName = product.name[language as keyof typeof product.name] || product.name.en;
       const passesSearch = searchQuery
-        ? product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        ? localizedName.toLowerCase().includes(searchQuery.toLowerCase()) ||
           product.category.toLowerCase().includes(searchQuery.toLowerCase())
         : true;
   
@@ -67,7 +70,7 @@ const ProductGrid = ({
         // Using id as proxy for newest since higher id = newer
         return result.sort((a, b) => b.id - a.id);
     }
-  }, [selectedCategory, priceRange, minRating, showFavoritesOnly, searchQuery, sortOption, isFavorite]);
+  }, [selectedCategory, priceRange, minRating, showFavoritesOnly, searchQuery, sortOption, language, isFavorite]);
 
   if (filteredProducts.length === 0) {
     return (
@@ -75,14 +78,20 @@ const ProductGrid = ({
         <div className="mx-auto w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mb-4">
           <Search className="h-8 w-8 text-gray-400" />
         </div>
-        <h3 className="text-lg font-medium">Aucun produit trouvé</h3>
-        <p className="text-gray-500">Essayez d'ajuster vos filtres ou votre recherche.</p>
+        <h3 className="text-lg font-medium">
+          {language === 'fr' ? "Aucun produit trouvé" : "No products found"}
+        </h3>
+        <p className="text-gray-500">
+          {language === 'fr' 
+            ? "Essayez d'ajuster vos filtres ou votre recherche." 
+            : "Try adjusting your filters or search query."}
+        </p>
         <Button 
           variant="outline"
           className="mt-4"
           onClick={resetFilters}
         >
-          Réinitialiser les filtres
+          {language === 'fr' ? "Réinitialiser les filtres" : "Reset filters"}
         </Button>
       </div>
     );

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ShoppingCart, Star, Heart } from "lucide-react";
 import { useCart } from '@/stores/CartStore';
 import { useFavorites } from '@/stores/FavoritesStore';
+import { useLanguage } from '@/contexts/LanguageContext';
 import { useToast } from "@/hooks/use-toast";
 import useSound from '@/hooks/useSound';
 import {
@@ -16,7 +17,10 @@ import {
 
 interface ProductCardProps {
   id: number;
-  name: string;
+  name: {
+    en: string;
+    fr: string;
+  };
   price: number;
   image: string;
   category: string;
@@ -28,15 +32,20 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
   const addToCart = useCart(state => state.addItem);
   const { toast } = useToast();
   const { toggleFavorite, isFavorite } = useFavorites();
+  const { language } = useLanguage();
   const isLiked = isFavorite(id);
   const { playAddToCartSound, playFavoriteSound } = useSound();
 
+  const localizedName = name[language as keyof typeof name] || name.en;
+
   const handleAddToCart = () => {
-    addToCart({ id, name, price, image, quantity: 1 });
+    addToCart({ id, name: localizedName, price, image, quantity: 1 });
     playAddToCartSound();
     toast({
-      title: "Ajouté au panier",
-      description: `${name} a été ajouté à votre panier`,
+      title: language === 'fr' ? "Ajouté au panier" : "Added to cart",
+      description: language === 'fr' 
+        ? `${localizedName} a été ajouté à votre panier` 
+        : `${localizedName} has been added to your cart`,
     });
   };
 
@@ -49,9 +58,9 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
   };
 
   const formatPrice = (price: number) => {
-    return new Intl.NumberFormat('fr-FR', {
+    return new Intl.NumberFormat(language === 'fr' ? 'fr-FR' : 'en-US', {
       style: 'currency',
-      currency: 'EUR'
+      currency: language === 'fr' ? 'EUR' : 'USD'
     }).format(price);
   };
 
@@ -64,7 +73,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
       {featured && (
         <div className="absolute top-2 right-2 z-10">
           <span className="inline-flex items-center rounded-full bg-yellow-100 px-2.5 py-1 text-xs font-medium text-yellow-800">
-            Produit Vedette
+            {language === 'fr' ? "Produit Vedette" : "Featured Product"}
           </span>
         </div>
       )}
@@ -75,7 +84,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
         <div className="relative aspect-square overflow-hidden">
           <img 
             src={image} 
-            alt={name}
+            alt={localizedName}
             className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
           />
           <TooltipProvider>
@@ -92,7 +101,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>{isLiked ? "Retirer des favoris" : "Ajouter aux favoris"}</p>
+                <p>{isLiked 
+                  ? (language === 'fr' ? "Retirer des favoris" : "Remove from favorites") 
+                  : (language === 'fr' ? "Ajouter aux favoris" : "Add to favorites")}
+                </p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -112,7 +124,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
         <div className="flex flex-col gap-2">
           <span className="text-sm font-medium text-blue-600">{category}</span>
           <h3 className="font-semibold text-lg mb-2 text-gray-900 group-hover:text-blue-600 transition-colors">
-            {name}
+            {localizedName}
           </h3>
           <div className="flex items-center justify-between">
             <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
@@ -128,11 +140,11 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
                     className="bg-blue-600 hover:bg-blue-700 transition-all duration-300 transform hover:scale-105"
                   >
                     <ShoppingCart className="w-4 h-4 mr-2" />
-                    Ajouter
+                    {language === 'fr' ? "Ajouter" : "Add"}
                   </Button>
                 </TooltipTrigger>
                 <TooltipContent>
-                  <p>Ajouter au panier</p>
+                  <p>{language === 'fr' ? "Ajouter au panier" : "Add to cart"}</p>
                 </TooltipContent>
               </Tooltip>
             </TooltipProvider>
