@@ -19,8 +19,11 @@ const LanguageSwitcher = () => {
       duration: 3000,
     });
 
-    // Log the change to help with debugging
+    // Log the language change to help with debugging
     console.log(`Language changed to: ${newLang}`);
+    
+    // Force refresh the UI to ensure all translations are applied
+    window.dispatchEvent(new Event('language-changed'));
   };
 
   return (
@@ -29,6 +32,7 @@ const LanguageSwitcher = () => {
       size="sm"
       onClick={toggleLanguage}
       className="px-2 hover:bg-gray-100 dark:hover:bg-gray-800 border-gray-300 flex items-center gap-1"
+      title={language === 'fr' ? 'Switch to English' : 'Passer au Français'}
     >
       <Languages className="h-4 w-4" />
       {language === 'fr' ? 'EN' : 'FR'}

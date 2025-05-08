@@ -115,27 +115,35 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
 
   useEffect(() => {
     localStorage.setItem('language', language);
+    // Force a render on language change
+    const event = new Event('language-changed');
+    window.dispatchEvent(event);
   }, [language]);
 
+  // Type-safe translation function
   const t = (key: string): string => {
-    // Handle nested keys like 'footer.description'
-    if (key.includes('.')) {
-      const [section, nestedKey] = key.split('.');
-      const translationObj = translations[language as keyof typeof translations];
-      const sectionContent = translationObj[section as keyof TranslationValues];
-      
-      if (sectionContent && typeof sectionContent === 'object') {
-        // Cast the result to string and ensure we have a valid string return
-        const nestedValue = (sectionContent as Record<string, string>)[nestedKey];
-        return typeof nestedValue === 'string' ? nestedValue : key;
+    try {
+      // Handle nested keys like 'footer.description'
+      if (key.includes('.')) {
+        const [section, nestedKey] = key.split('.');
+        const translationObj = translations[language as keyof typeof translations];
+        const sectionContent = translationObj[section as keyof TranslationValues];
+        
+        if (sectionContent && typeof sectionContent === 'object') {
+          const nestedValue = (sectionContent as Record<string, string>)[nestedKey];
+          return typeof nestedValue === 'string' ? nestedValue : key;
+        }
+        return key;
       }
-      return key;
+      
+      // Handle regular keys
+      const translationObj = translations[language as keyof typeof translations];
+      const translation = translationObj[key as keyof TranslationValues];
+      return typeof translation === 'string' ? translation : key;
+    } catch (error) {
+      console.error(`Translation error for key: ${key}`, error);
+      return key; // Fallback to the key itself
     }
-    
-    // Handle regular keys
-    const translationObj = translations[language as keyof typeof translations];
-    const translation = translationObj[key as keyof TranslationValues];
-    return typeof translation === 'string' ? translation : key;
   };
 
   return (
