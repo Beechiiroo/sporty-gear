@@ -1,118 +1,127 @@
 
 import { chatbotResponses } from './chatbotResponses';
 
-/**
- * Generate a response based on user message and current language
- * @param userMessage - The message from the user
- * @param language - The current language ('en' or 'fr')
- * @returns A string response from the chatbot
- */
-export const generateResponse = (userMessage: string, language: string): string => {
-  const userMessageLower = userMessage.toLowerCase();
+export const generateResponse = (userMessage: string, language: string = 'en') => {
+  // Convert to lowercase for easier matching
+  const message = userMessage.toLowerCase();
   
-  // Get responses for current language
-  const currentResponses = language === 'fr' ? chatbotResponses.fr : chatbotResponses.en;
+  // Select language-specific responses (fallback to English if not available)
+  const responses = chatbotResponses[language] || chatbotResponses.en;
   
-  // Match keywords and return appropriate responses
-  if (userMessageLower.includes('bonjour') || userMessageLower.includes('salut') || 
-      userMessageLower.includes('hello') || userMessageLower.includes('hi')) {
-    return currentResponses.greeting;
-  } else if (userMessageLower.includes('produit') || userMessageLower.includes('product') || 
-             userMessageLower.includes('article') || userMessageLower.includes('item') ||
-             userMessageLower.includes('équipement') || userMessageLower.includes('equipment')) {
-    return currentResponses.products;
-  } else if (userMessageLower.includes('catégorie') || userMessageLower.includes('category') ||
-             userMessageLower.includes('type') || userMessageLower.includes('genre') ||
-             userMessageLower.includes('section') || userMessageLower.includes('département')) {
-    return currentResponses.categories;
-  } else if (userMessageLower.includes('livraison') || userMessageLower.includes('shipping') || 
-             userMessageLower.includes('délai') || userMessageLower.includes('delivery') ||
-             userMessageLower.includes('envoi') || userMessageLower.includes('expédition')) {
-    return currentResponses.shipping;
-  } else if (userMessageLower.includes('retour') || userMessageLower.includes('return') || 
-             userMessageLower.includes('rembourse') || userMessageLower.includes('refund') ||
-             userMessageLower.includes('échange') || userMessageLower.includes('exchange')) {
-    return currentResponses.returns;
-  } else if (userMessageLower.includes('contact') || userMessageLower.includes('téléphone') || 
-             userMessageLower.includes('email') || userMessageLower.includes('phone') ||
-             userMessageLower.includes('joindre') || userMessageLower.includes('reach')) {
-    return currentResponses.contact;
-  } else if (userMessageLower.includes('horaire') || userMessageLower.includes('hour') || 
-             userMessageLower.includes('ouverture') || userMessageLower.includes('open') ||
-             userMessageLower.includes('fermé') || userMessageLower.includes('closed')) {
-    return currentResponses.hours;
-  } else if (userMessageLower.includes('prix') || userMessageLower.includes('price') || 
-             userMessageLower.includes('coût') || userMessageLower.includes('cost') ||
-             userMessageLower.includes('tarif') || userMessageLower.includes('rate') ||
-             userMessageLower.includes('cher') || userMessageLower.includes('expensive')) {
-    return currentResponses.price;
-  } else if (userMessageLower.includes('réduction') || userMessageLower.includes('discount') || 
-             userMessageLower.includes('promo') || userMessageLower.includes('coupon') ||
-             userMessageLower.includes('offre') || userMessageLower.includes('offer') ||
-             userMessageLower.includes('rabais') || userMessageLower.includes('sale')) {
-    return currentResponses.discount;
-  } else if (userMessageLower.includes('paiement') || userMessageLower.includes('payment') || 
-             userMessageLower.includes('carte') || userMessageLower.includes('card') ||
-             userMessageLower.includes('facture') || userMessageLower.includes('invoice') ||
-             userMessageLower.includes('transaction') || userMessageLower.includes('paypal')) {
-    return currentResponses.payment;
-  } else if (userMessageLower.includes('taille') || userMessageLower.includes('size') || 
-             userMessageLower.includes('dimension') || userMessageLower.includes('mesure') ||
-             userMessageLower.includes('grandeur') || userMessageLower.includes('fit')) {
-    return currentResponses.size;
-  } else if (userMessageLower.includes('matériau') || userMessageLower.includes('material') || 
-             userMessageLower.includes('tissu') || userMessageLower.includes('fabric') ||
-             userMessageLower.includes('composition') || userMessageLower.includes('texture') ||
-             userMessageLower.includes('qualité') || userMessageLower.includes('quality')) {
-    return currentResponses.material;
-  } else if (userMessageLower.includes('garantie') || userMessageLower.includes('warranty') || 
-             userMessageLower.includes('assurance') || userMessageLower.includes('insurance') ||
-             userMessageLower.includes('protection')) {
-    return currentResponses.warranty;
-  } else if (userMessageLower.includes('stock') || userMessageLower.includes('disponible') || 
-             userMessageLower.includes('available') || userMessageLower.includes('inventaire') ||
-             userMessageLower.includes('inventory') || userMessageLower.includes('rupture')) {
-    return currentResponses.stock;
-  } else if (userMessageLower.includes('personnalisation') || userMessageLower.includes('customization') || 
-             userMessageLower.includes('personnalisé') || userMessageLower.includes('custom') ||
-             userMessageLower.includes('sur mesure') || userMessageLower.includes('tailor')) {
-    return currentResponses.customization;
-  } else if (userMessageLower.includes('entretien') || userMessageLower.includes('maintenance') || 
-             userMessageLower.includes('nettoyage') || userMessageLower.includes('cleaning') ||
-             userMessageLower.includes('soin') || userMessageLower.includes('care')) {
-    return currentResponses.maintenance;
-  } else if (userMessageLower.includes('meilleur') || userMessageLower.includes('best') || 
-             userMessageLower.includes('populaire') || userMessageLower.includes('popular') ||
-             userMessageLower.includes('vendu') || userMessageLower.includes('bestseller')) {
-    return currentResponses.bestseller;
-  } else if (userMessageLower.includes('nouveau') || userMessageLower.includes('new') || 
-             userMessageLower.includes('récent') || userMessageLower.includes('recent') ||
-             userMessageLower.includes('dernier') || userMessageLower.includes('latest')) {
-    return currentResponses.newArrivals;
-  } else if (userMessageLower.includes('promotion') || userMessageLower.includes('promo') || 
-             userMessageLower.includes('solde') || userMessageLower.includes('sale') ||
-             userMessageLower.includes('remise') || userMessageLower.includes('discount')) {
-    return currentResponses.promotions;
-  } else if (userMessageLower.includes('carte cadeau') || userMessageLower.includes('gift card') || 
-             userMessageLower.includes('chèque cadeau') || userMessageLower.includes('gift certificate')) {
-    return currentResponses.giftCard;
-  } else if (userMessageLower.includes('fidélité') || userMessageLower.includes('loyalty') || 
-             userMessageLower.includes('point') || userMessageLower.includes('reward') ||
-             userMessageLower.includes('avantage') || userMessageLower.includes('benefit')) {
-    return currentResponses.loyaltyProgram;
-  } else if (userMessageLower.includes('écologique') || userMessageLower.includes('eco') || 
-             userMessageLower.includes('environnement') || userMessageLower.includes('environment') ||
-             userMessageLower.includes('durable') || userMessageLower.includes('sustainable')) {
-    return currentResponses.ecofriendly;
-  } else if (userMessageLower.includes('sponsor') || userMessageLower.includes('équipe') || 
-             userMessageLower.includes('team') || userMessageLower.includes('athlète') ||
-             userMessageLower.includes('athlete')) {
-    return currentResponses.sponsored;
-  } else if (userMessageLower.includes('covid') || userMessageLower.includes('pandémie') || 
-             userMessageLower.includes('pandemic') || userMessageLower.includes('sanitaire') ||
-             userMessageLower.includes('health')) {
-    return currentResponses.covid;
-  } else {
-    return currentResponses.default;
+  // Check for keywords to determine the response type
+  if (message.includes('hello') || message.includes('hi') || message.includes('hey') || 
+      message.includes('bonjour') || message.includes('salut') || 
+      message.includes('مرحبا') || message.includes('السلام عليكم')) {
+    return responses.greeting;
+  } 
+  
+  else if (message.includes('product') || message.includes('item') || message.includes('produit') || 
+           message.includes('article') || message.includes('منتج') || message.includes('سلعة')) {
+    return responses.products;
+  } 
+  
+  else if (message.includes('categor') || message.includes('catégor') || message.includes('فئات')) {
+    return responses.categories;
+  } 
+  
+  else if (message.includes('ship') || message.includes('delivery') || message.includes('livraison') || 
+           message.includes('شحن') || message.includes('توصيل')) {
+    return responses.shipping;
+  } 
+  
+  else if (message.includes('return') || message.includes('refund') || message.includes('retour') ||
+           message.includes('remboursement') || message.includes('إرجاع') || message.includes('استرداد')) {
+    return responses.returns;
+  } 
+  
+  else if (message.includes('contact') || message.includes('اتصل')) {
+    return responses.contact;
+  } 
+  
+  else if (message.includes('hour') || message.includes('time') || message.includes('heure') ||
+           message.includes('temps') || message.includes('ساعة') || message.includes('وقت')) {
+    return responses.hours;
+  } 
+  
+  else if (message.includes('price') || message.includes('cost') || message.includes('prix') || 
+           message.includes('coût') || message.includes('سعر') || message.includes('تكلفة')) {
+    return responses.price;
+  } 
+  
+  else if (message.includes('discount') || message.includes('promo') || message.includes('réduction') ||
+           message.includes('خصم') || message.includes('ترويج')) {
+    return responses.discount;
+  } 
+  
+  else if (message.includes('payment') || message.includes('paiement') || message.includes('دفع')) {
+    return responses.payment;
+  } 
+  
+  else if (message.includes('size') || message.includes('taille') || message.includes('حجم')) {
+    return responses.size;
+  } 
+  
+  else if (message.includes('material') || message.includes('matériau') || message.includes('مواد')) {
+    return responses.material;
+  } 
+  
+  else if (message.includes('warranty') || message.includes('garantie') || message.includes('ضمان')) {
+    return responses.warranty;
+  } 
+  
+  else if (message.includes('stock') || message.includes('inventory') || message.includes('inventaire') || 
+           message.includes('مخزون')) {
+    return responses.stock;
+  } 
+  
+  else if (message.includes('custom') || message.includes('personnalis') || message.includes('تخصيص')) {
+    return responses.customization;
+  } 
+  
+  else if (message.includes('care') || message.includes('maintenance') || message.includes('entretien') || 
+           message.includes('maintenance') || message.includes('رعاية') || message.includes('صيانة')) {
+    return responses.maintenance;
+  } 
+  
+  else if (message.includes('best') || message.includes('popular') || message.includes('meilleur') || 
+           message.includes('populaire') || message.includes('أفضل') || message.includes('شعبية')) {
+    return responses.bestseller;
+  } 
+  
+  else if (message.includes('new') || message.includes('recent') || message.includes('nouveau') ||
+           message.includes('récent') || message.includes('جديد') || message.includes('حديث')) {
+    return responses.newArrivals;
+  } 
+  
+  else if (message.includes('promotion') || message.includes('deal') || message.includes('offre') ||
+           message.includes('عرض') || message.includes('صفقة')) {
+    return responses.promotions;
+  } 
+  
+  else if (message.includes('gift') || message.includes('cadeau') || message.includes('هدية')) {
+    return responses.giftCard;
+  } 
+  
+  else if (message.includes('loyal') || message.includes('reward') || message.includes('fidélité') || 
+           message.includes('récompense') || message.includes('ولاء') || message.includes('مكافأة')) {
+    return responses.loyaltyProgram;
+  } 
+  
+  else if (message.includes('eco') || message.includes('environment') || message.includes('environnement') || 
+           message.includes('بيئة') || message.includes('إيكو')) {
+    return responses.ecofriendly;
+  } 
+  
+  else if (message.includes('spons') || message.includes('partner') || message.includes('partenaire') ||
+           message.includes('راعي') || message.includes('شريك')) {
+    return responses.sponsored;
+  } 
+  
+  else if (message.includes('covid') || message.includes('pandemic') || message.includes('pandémie') || 
+           message.includes('كوفيد') || message.includes('جائحة')) {
+    return responses.covid;
   }
+  
+  // Default response if no keywords match
+  return responses.default;
 };

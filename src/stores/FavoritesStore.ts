@@ -24,21 +24,55 @@ export const useFavorites = create<FavoritesState>()(
           set((state) => ({
             favorites: [...state.favorites, product]
           }));
-          toast({
-            title: "Ajouté aux favoris",
-            description: "Le produit a été ajouté à vos favoris"
-          });
+          
+          // Get the user's language from localStorage
+          const language = localStorage.getItem('language') || 'en';
+          
+          if (language === 'fr') {
+            toast({
+              title: "Ajouté aux favoris",
+              description: "Le produit a été ajouté à vos favoris"
+            });
+          } else if (language === 'ar') {
+            toast({
+              title: "تمت الإضافة إلى المفضلة",
+              description: "تمت إضافة المنتج إلى قائمة المفضلة لديك"
+            });
+          } else {
+            toast({
+              title: "Added to favorites",
+              description: "The product has been added to your favorites"
+            });
+          }
         },
         
         removeFavorite: (id) => {
           set((state) => ({
             favorites: state.favorites.filter(product => product.id !== id)
           }));
-          toast({
-            title: "Retiré des favoris",
-            description: "Le produit a été retiré de vos favoris",
-            variant: "destructive"
-          });
+          
+          // Get the user's language from localStorage
+          const language = localStorage.getItem('language') || 'en';
+          
+          if (language === 'fr') {
+            toast({
+              title: "Retiré des favoris",
+              description: "Le produit a été retiré de vos favoris",
+              variant: "destructive"
+            });
+          } else if (language === 'ar') {
+            toast({
+              title: "تمت الإزالة من المفضلة",
+              description: "تمت إزالة المنتج من قائمة المفضلة لديك",
+              variant: "destructive"
+            });
+          } else {
+            toast({
+              title: "Removed from favorites",
+              description: "The product has been removed from your favorites",
+              variant: "destructive"
+            });
+          }
         },
         
         toggleFavorite: (product) => {
@@ -54,11 +88,29 @@ export const useFavorites = create<FavoritesState>()(
         
         clearFavorites: () => {
           set({ favorites: [] });
-          toast({
-            title: "Favoris effacés",
-            description: "Tous les favoris ont été supprimés",
-            variant: "destructive"
-          });
+          
+          // Get the user's language from localStorage
+          const language = localStorage.getItem('language') || 'en';
+          
+          if (language === 'fr') {
+            toast({
+              title: "Favoris effacés",
+              description: "Tous les favoris ont été supprimés",
+              variant: "destructive"
+            });
+          } else if (language === 'ar') {
+            toast({
+              title: "تم مسح المفضلة",
+              description: "تم حذف جميع العناصر المفضلة",
+              variant: "destructive"
+            });
+          } else {
+            toast({
+              title: "Favorites cleared",
+              description: "All favorites have been removed",
+              variant: "destructive"
+            });
+          }
         },
         
         getFavoritesCount: () => get().favorites.length

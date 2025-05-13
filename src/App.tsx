@@ -13,6 +13,7 @@ import Portfolio from "./pages/Portfolio";
 import Chatbot from "./components/Chatbot";
 import { LanguageProvider } from "./contexts/LanguageContext";
 import { DarkModeProvider } from "./contexts/DarkModeContext";
+import OurStory from "./pages/OurStory";
 
 const queryClient = new QueryClient();
 
@@ -42,7 +43,8 @@ const App = () => {
                   <Route path="/" element={<Index />} />
                   <Route path="/product/:id" element={<ProductDetails />} />
                   <Route path="/portfolio" element={<Portfolio />} />
-                  <Route path="/notre-histoire" element={<NotFound />} />
+                  <Route path="/notre-histoire" element={<OurStory />} />
+                  <Route path="/our-story" element={<OurStory />} />
                   <Route path="/contact" element={<NotFound />} />
                   <Route path="/blog" element={<NotFound />} />
                   <Route path="/faq" element={<NotFound />} />

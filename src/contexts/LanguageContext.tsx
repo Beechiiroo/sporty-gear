@@ -39,6 +39,11 @@ interface TranslationValues {
   heroDescription: string;
   shopNow: string;
   discoverOurStory: string;
+  ourStoryTitle: string;
+  ourStoryContent: string;
+  ourMission: string;
+  ourVision: string;
+  ourTeam: string;
 }
 
 interface FooterTranslations {
@@ -102,6 +107,11 @@ const translations = {
     heroDescription: "Premium sports equipment for champions. Discover our professional quality gear with exceptional discounts.",
     shopNow: "Shop Now",
     discoverOurStory: "Discover Our Story",
+    ourStoryTitle: "Our Story",
+    ourStoryContent: "Founded in 2010, SportyGear began with a simple mission: to provide high-quality sports equipment accessible to everyone. What started as a small shop in downtown has grown into a global brand trusted by amateur enthusiasts and professional athletes alike.",
+    ourMission: "Our mission is to empower athletes of all levels by providing them with the highest quality equipment that enhances their performance and enjoyment of sports.",
+    ourVision: "To be the world's most trusted sports equipment provider, known for innovation, quality, and customer satisfaction.",
+    ourTeam: "Our Team",
     footer: {
       description: "Professional sports equipment with the best quality and price guarantee.",
       categories: "Categories",
@@ -150,6 +160,11 @@ const translations = {
     heroDescription: "Équipement sportif premium pour les champions. Découvrez notre matériel de qualité professionnelle avec des remises exceptionnelles.",
     shopNow: "Acheter Maintenant",
     discoverOurStory: "Découvrir Notre Histoire",
+    ourStoryTitle: "Notre Histoire",
+    ourStoryContent: "Fondée en 2010, SportyGear a débuté avec une mission simple : fournir des équipements sportifs de haute qualité accessibles à tous. Ce qui a commencé comme une petite boutique au centre-ville est devenu une marque mondiale reconnue tant par les amateurs que par les athlètes professionnels.",
+    ourMission: "Notre mission est de permettre aux athlètes de tous niveaux de se dépasser en leur fournissant des équipements de la plus haute qualité qui améliorent leurs performances et leur plaisir de la pratique sportive.",
+    ourVision: "Devenir le fournisseur d'équipements sportifs le plus fiable au monde, reconnu pour son innovation, sa qualité et la satisfaction de ses clients.",
+    ourTeam: "Notre Équipe",
     footer: {
       description: "Équipement sportif professionnel avec la meilleure qualité et garantie de prix.",
       categories: "Catégories",
@@ -160,6 +175,59 @@ const translations = {
       terms: "Conditions d'Utilisation",
       shipping: "Politique d'Expédition",
       returns: "Politique de Retours"
+    }
+  },
+  ar: {
+    categories: "فئات",
+    shop: "تسوق",
+    search: "ابحث عن منتجات...",
+    favorites: "المفضلة",
+    bestRated: "الأعلى تقييمًا",
+    newItems: "منتجات جديدة",
+    about: "حول",
+    ourStory: "قصتنا",
+    contact: "اتصل بنا",
+    blog: "المدونة",
+    faq: "الأسئلة الشائعة",
+    portfolio: "معرض الأعمال",
+    chat: "تحدث معنا",
+    chatPlaceholder: "اكتب رسالتك...",
+    chatbotGreeting: "مرحبًا! أنا المساعد الافتراضي لـ SportyGear. كيف يمكنني مساعدتك اليوم؟",
+    toggleDarkMode: "تبديل الوضع المظلم",
+    relatedProducts: "منتجات ذات صلة",
+    productNotFound: "المنتج غير موجود",
+    returnHome: "العودة إلى الصفحة الرئيسية",
+    description: "الوصف",
+    addToCart: "أضف إلى السلة",
+    noProductsFound: "لم يتم العثور على منتجات",
+    adjustFilters: "حاول ضبط عوامل التصفية أو استعلام البحث الخاص بك.",
+    resetFilters: "إعادة ضبط الفلاتر",
+    addedToCart: "تمت الإضافة إلى السلة",
+    hasBeenAddedToCart: "تمت إضافته إلى سلة التسوق الخاصة بك",
+    featuredProduct: "منتج مميز",
+    removeFromFavorites: "إزالة من المفضلة",
+    addToFavorites: "أضف إلى المفضلة",
+    languageChanged: "تم تغيير اللغة",
+    selected: "تم اختيار",
+    heroTitle: "ارتقِ بلعبتك",
+    heroDescription: "معدات رياضية فاخرة للأبطال. اكتشف معداتنا ذات الجودة الاحترافية مع خصومات استثنائية.",
+    shopNow: "تسوق الآن",
+    discoverOurStory: "اكتشف قصتنا",
+    ourStoryTitle: "قصتنا",
+    ourStoryContent: "تأسست SportyGear في عام 2010 بمهمة بسيطة: توفير معدات رياضية عالية الجودة يمكن للجميع الوصول إليها. ما بدأ كمتجر صغير في وسط المدينة تحول إلى علامة تجارية عالمية يثق بها الهواة والرياضيون المحترفون على حد سواء.",
+    ourMission: "مهمتنا هي تمكين الرياضيين من جميع المستويات من خلال تزويدهم بأعلى جودة من المعدات التي تعزز أدائهم واستمتاعهم بالرياضة.",
+    ourVision: "أن نكون مزود المعدات الرياضية الأكثر ثقة في العالم، المعروف بالابتكار والجودة ورضا العملاء.",
+    ourTeam: "فريقنا",
+    footer: {
+      description: "معدات رياضية احترافية بأفضل جودة وضمان السعر.",
+      categories: "فئات",
+      about: "من نحن",
+      developer: "طوّر بواسطة فريق SportyGear",
+      rights: "© 2025 SportyGear. جميع الحقوق محفوظة.",
+      privacy: "سياسة الخصوصية",
+      terms: "شروط الخدمة",
+      shipping: "سياسة الشحن",
+      returns: "سياسة الإرجاع"
     }
   }
 };

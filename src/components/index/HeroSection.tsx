@@ -2,6 +2,7 @@
 import { Button } from "@/components/ui/button";
 import { ShoppingBag } from "lucide-react";
 import { useLanguage } from "@/contexts/LanguageContext";
+import { Link } from "react-router-dom";
 
 interface HeroSectionProps {
   scrollToProducts: () => void;
@@ -11,7 +12,7 @@ const HeroSection = ({ scrollToProducts }: HeroSectionProps) => {
   const { language, t } = useLanguage();
   
   return (
-    <div className="relative overflow-hidden bg-gradient-to-r from-blue-900 via-blue-800 to-purple-900 text-white min-h-[600px] flex items-center">
+    <div className={`relative overflow-hidden bg-gradient-to-r from-blue-900 via-blue-800 to-purple-900 text-white min-h-[600px] flex items-center ${language === 'ar' ? 'rtl' : ''}`}>
       <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1517649763962-0c623066013b?w=1800')] bg-cover bg-center opacity-20" />
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-2xl space-y-6">
@@ -34,9 +35,11 @@ const HeroSection = ({ scrollToProducts }: HeroSectionProps) => {
               size="lg" 
               variant="outline" 
               className="animate-fade-in delay-300 bg-transparent border-white text-white hover:bg-white/10"
-              onClick={() => window.location.href = '/notre-histoire'}
+              asChild
             >
-              {t('discoverOurStory')}
+              <Link to="/our-story">
+                {t('discoverOurStory')}
+              </Link>
             </Button>
           </div>
         </div>
