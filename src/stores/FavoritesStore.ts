@@ -2,12 +2,13 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { toast } from "@/hooks/use-toast";
+import { Product } from '@/types/product';
 
 interface FavoritesState {
-  favorites: number[];
-  addFavorite: (id: number) => void;
+  favorites: Product[];
+  addFavorite: (product: Product) => void;
   removeFavorite: (id: number) => void;
-  toggleFavorite: (id: number) => void;
+  toggleFavorite: (product: Product) => void;
   isFavorite: (id: number) => boolean;
   clearFavorites: () => void;
   getFavoritesCount: () => number;
@@ -19,9 +20,9 @@ export const useFavorites = create<FavoritesState>()(
       return {
         favorites: [],
         
-        addFavorite: (id) => {
+        addFavorite: (product) => {
           set((state) => ({
-            favorites: [...state.favorites, id]
+            favorites: [...state.favorites, product]
           }));
           toast({
             title: "Ajouté aux favoris",
@@ -31,7 +32,7 @@ export const useFavorites = create<FavoritesState>()(
         
         removeFavorite: (id) => {
           set((state) => ({
-            favorites: state.favorites.filter(favId => favId !== id)
+            favorites: state.favorites.filter(product => product.id !== id)
           }));
           toast({
             title: "Retiré des favoris",
@@ -40,16 +41,16 @@ export const useFavorites = create<FavoritesState>()(
           });
         },
         
-        toggleFavorite: (id) => {
-          const isFavorite = get().isFavorite(id);
+        toggleFavorite: (product) => {
+          const isFavorite = get().isFavorite(product.id);
           if (isFavorite) {
-            get().removeFavorite(id);
+            get().removeFavorite(product.id);
           } else {
-            get().addFavorite(id);
+            get().addFavorite(product);
           }
         },
         
-        isFavorite: (id) => get().favorites.includes(id),
+        isFavorite: (id) => get().favorites.some(product => product.id === id),
         
         clearFavorites: () => {
           set({ favorites: [] });
