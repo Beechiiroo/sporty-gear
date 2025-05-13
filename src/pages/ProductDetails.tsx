@@ -10,6 +10,7 @@ import { useCart } from '@/stores/CartStore';
 import { useFavorites } from '@/stores/FavoritesStore';
 import { AspectRatio } from '@/components/ui/aspect-ratio';
 import { toast } from '@/hooks/use-toast';
+import { Product } from '@/types/product';
 
 const mockReviews = [
   {
@@ -79,14 +80,16 @@ const ProductDetails = () => {
   };
 
   const handleToggleFavorite = () => {
-    toggleFavorite({
+    // Create a complete product object to pass to toggleFavorite
+    const productToToggle: Product = {
       id: product.id,
-      name: localizedName,
+      name: product.name, // Pass the object with en and fr properties
       price: product.price,
       image: product.image,
       category: product.category,
       rating: product.rating
-    });
+    };
+    toggleFavorite(productToToggle);
   };
 
   return (

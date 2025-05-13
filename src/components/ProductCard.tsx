@@ -14,6 +14,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { Product } from '@/types/product';
 
 interface ProductCardProps {
   id: number;
@@ -49,7 +50,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ id, name, price, image, categ
 
   const handleToggleFavorite = (e: React.MouseEvent) => {
     e.stopPropagation(); // Prevent navigation when clicking the heart icon
-    toggleFavorite(id);
+    // Create a complete product object to pass to toggleFavorite
+    const product: Product = {
+      id,
+      name,
+      price,
+      image,
+      category,
+      rating: rating || 5
+    };
+    toggleFavorite(product);
     if (!isLiked) {
       playFavoriteSound();
     }
