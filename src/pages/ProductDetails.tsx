@@ -1,14 +1,16 @@
 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { products } from '@/data/products';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, ShoppingCart, Star } from 'lucide-react';
+import { ArrowLeft, ShoppingCart, Star, Heart } from 'lucide-react';
 import { useLanguage } from '@/contexts/LanguageContext';
 import RelatedProducts from '@/components/RelatedProducts';
 import ProductReviews from '@/components/ProductReviews';
 import { useCart } from '@/stores/CartStore';
 import { useFavorites } from '@/stores/FavoritesStore';
+import { AspectRatio } from '@/components/ui/aspect-ratio';
+import { toast } from '@/hooks/use-toast';
 
 const mockReviews = [
   {
@@ -36,7 +38,13 @@ const ProductDetails = () => {
   const { toggleFavorite, isFavorite } = useFavorites();
   const { language, t } = useLanguage();
 
-  const product = products.find(p => p.id === Number(id));
+  const productId = Number(id);
+  const product = products.find(p => p.id === productId);
+
+  // Scroll to top on component mount
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [productId]);
 
   if (!product) {
     return (
@@ -53,6 +61,7 @@ const ProductDetails = () => {
   }
 
   const localizedName = product.name[language as keyof typeof product.name] || product.name.en;
+  const isFav = isFavorite(product.id);
 
   const handleAddToCart = () => {
     addToCart({
@@ -61,6 +70,23 @@ const ProductDetails = () => {
       price: product.price,
       image: product.image,
       quantity: 1
+    });
+    
+    toast({
+      title: t('addedToCart'),
+      description: `${localizedName} ${t('hasBeenAddedToCart')}`,
+      duration: 3000,
+    });
+  };
+
+  const handleToggleFavorite = () => {
+    toggleFavorite({
+      id: product.id,
+      name: localizedName,
+      price: product.price,
+      image: product.image,
+      category: product.category,
+      rating: product.rating
     });
   };
 
@@ -72,12 +98,14 @@ const ProductDetails = () => {
       </Button>
 
       <div className="grid md:grid-cols-2 gap-8">
-        <div className="relative aspect-square">
-          <img
-            src={product.image}
-            alt={localizedName}
-            className="w-full h-full object-cover rounded-lg"
-          />
+        <div className="relative rounded-lg overflow-hidden border border-gray-200">
+          <AspectRatio ratio={1/1} className="bg-gray-100">
+            <img
+              src={product.image}
+              alt={localizedName}
+              className="w-full h-full object-cover"
+            />
+          </AspectRatio>
         </div>
 
         <div className="space-y-6">
@@ -118,6 +146,14 @@ const ProductDetails = () => {
             <Button onClick={handleAddToCart} className="flex-1">
               <ShoppingCart className="mr-2 h-4 w-4" />
               {t('addToCart')}
+            </Button>
+            <Button 
+              variant={isFav ? "destructive" : "outline"} 
+              size="icon"
+              onClick={handleToggleFavorite}
+              title={isFav ? t('removeFromFavorites') : t('addToFavorites')}
+            >
+              <Heart className={`h-5 w-5 ${isFav ? 'fill-current' : ''}`} />
             </Button>
           </div>
         </div>
